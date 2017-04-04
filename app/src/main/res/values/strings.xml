@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Design</string>
+    <string name="navVin">Wine</string>
+    <string name="navCommande">Order</string>
+    <string name="navMouvement">Movement</string>
+    <string name="navParam">Settings</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <tabs>
+        <tab
+            id="@+id/tab_vin"
+            icon="@drawable/ic_vin"
+            title="@string/navVin" />
+        <tab
+            id="@+id/tab_commande"
+            icon="@drawable/ic_commande"
+            title="@string/navCommande" />
+        <tab
+            id="@+id/tab_mouvement"
+            icon="@drawable/ic_mouvement"
+            title="@string/navMouvement" />
+        <tab
+            id="@+id/tab_settings"
+            icon="@drawable/ic_settings"
+            title="@string/navParam"
+            />
+    </tabs>
+</PreferenceScreen>
