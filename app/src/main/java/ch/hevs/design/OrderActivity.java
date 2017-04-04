@@ -21,11 +21,8 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_vin) {
-                    Intent i = new Intent(OrderActivity.this,HomeActivity.class);
-                    startActivity(i);
-                }else if(tabId == R.id.tab_commande){
-                    Intent i = new Intent(OrderActivity.this,OrderActivity.class);
-                    startActivity(i);
+                    /*Intent i = new Intent(OrderActivity.this,HomeActivity.class);
+                    startActivity(i);*/
                 }else if(tabId == R.id.tab_mouvement){
                     OrderActivity.this.setTitle(R.string.navMouvement);
                 }else if(tabId == R.id.tab_settings){

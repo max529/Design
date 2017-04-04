@@ -23,11 +23,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_vin) {
-                    Intent i = new Intent(HomeActivity.this,HomeActivity.class);
-                    startActivity(i);
+                    HomeActivity.this.setTitle(R.string.navVin);
                 }else if(tabId == R.id.tab_commande){
-                    Intent i = new Intent(HomeActivity.this,OrderActivity.class);
-                    startActivity(i);
+                    HomeActivity.this.setTitle(R.string.navCommande);
                 }else if(tabId == R.id.tab_mouvement){
                     HomeActivity.this.setTitle(R.string.navMouvement);
                 }else if(tabId == R.id.tab_settings){
