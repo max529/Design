@@ -1,5 +1,7 @@
 package ch.hevs.design.data;
 
+import java.util.Date;
+
 /**
  * Created by hugo on 06.04.2017.
  */

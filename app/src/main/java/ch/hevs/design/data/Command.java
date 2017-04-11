@@ -2,6 +2,7 @@ package ch.hevs.design.data;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by hugo on 06.04.2017.
