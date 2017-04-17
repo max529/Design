@@ -4,4 +4,8 @@
     <string name="navCommande">Order</string>
     <string name="navMouvement">Movement</string>
     <string name="navParam">Settings</string>
+    <string name="add_wine">Add Wine</string>
+    <string name="order_wine">Order Wine</string>
+    <string name="title_activity_add_wine">AddWine</string>
+    <string name="validate_wine">Validate Wine</string>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
     <item android:actionLayout="@layout/activity_home"
-        android:title="Home">
+        android:id="@+id/navBtnAddWine"
+        android:title="@string/add_wine"/>
 
-    </item>
 </menu>

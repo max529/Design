@@ -29,7 +29,6 @@ public class CollectionPageAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
 
         BottomNavBar bottomNavBar = activity.bottomNavBar;
-        Log.e("max",bottomNavBar.getActivity().toString());
         bottomNavBar.selectTabAtPositionWithoutLoop(i);
 
 

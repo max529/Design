@@ -1,21 +1,17 @@
 package ch.hevs.design;
 
-import android.app.Application;
 import android.content.Intent;
-import android.support.annotation.IdRes;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 public class HomeActivity extends AppCompatActivity {
 
     BottomNavBar bottomNavBar = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomNavBar = new BottomNavBar(bottomBar);
         bottomNavBar.setActivity(HomeActivity.this);
+
         bottomNavBar.addPageViewer();
 
 
@@ -39,7 +36,25 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        bottomNavBar.setMenu(menu);
+        getMenuInflater().inflate(R.menu.home, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.navBtnAddWine:
+                Intent intent = new Intent(this, AddWineActivity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.navBtnOrderWine:
+                Log.e("maxDeb","order wine");
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true;
     }
 }
