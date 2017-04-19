@@ -16,7 +16,7 @@ import ch.hevs.design.data.Vin;
 
 public class HomeActivity extends AppCompatActivity {
 
-    BottomNavBar bottomNavBar = null;
+    public BottomNavBar bottomNavBar = null;
     public List<Vin> vins = new ArrayList<Vin>();
 
     @Override
@@ -62,8 +62,10 @@ public class HomeActivity extends AppCompatActivity {
         if(resultCode==RESULT_OK){
             Object a = data.getSerializableExtra("res");
             if(requestCode==1){
+                Log.e("debugMax","add vin");
                 Vin v = (Vin)a;
                 vins.add(v);
+                bottomNavBar.updateFragment(0);
             }
         }
     }
@@ -71,12 +73,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //a supprimer
     private void generateVin(){
-        for(int i = 0;i<25;i++){
-            Vin v = new Vin("","Cornalin",2008);
-            vins.add(v);
-        }
-
-
-
+        Vin v = new Vin("","Cornalin",2008);
+        vins.add(v);
     }
 }

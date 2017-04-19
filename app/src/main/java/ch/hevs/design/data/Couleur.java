@@ -8,4 +8,13 @@ import java.io.Serializable;
 
 public class Couleur implements Serializable{
     private String couleur;
+
+    public Couleur(String couleur) {
+        this.couleur = couleur;
+    }
+
+    @Override
+    public String toString() {
+        return this.couleur;
+    }
 }

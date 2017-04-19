@@ -16,6 +16,7 @@ import java.util.List;
 import ch.hevs.design.components.MultiSpinner;
 import ch.hevs.design.data.Cepage;
 import ch.hevs.design.data.Couleur;
+import ch.hevs.design.data.Fournisseur;
 import ch.hevs.design.data.Pays;
 import ch.hevs.design.data.Region;
 import ch.hevs.design.data.Vin;
@@ -24,9 +25,10 @@ import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class AddWineActivity extends AppCompatActivity implements MultiSpinner.MultiSpinnerListener {
-    private String colors[] = {"Rouge","Blanc","Rosé"};
+    private List<Couleur> colors = new ArrayList<Couleur>();
     private List<Region> regions = new ArrayList<Region>();
     private List<Cepage> cepages = new ArrayList<Cepage>();
+    private List<Fournisseur> fournisseurs = new ArrayList<Fournisseur>();
 
 
 
@@ -48,6 +50,9 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
         //set cépage
         updateListCepage();
 
+        //set fournisseur
+        updateListFournisseur();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,6 +71,9 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
             case R.id.navBtnAddCepage:
                 intent = new Intent(this, AddCepageActivity.class);
                 this.startActivityForResult(intent,2);
+                break;
+            case R.id.navBtnValidateAddWine:
+                validateWine();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -114,7 +122,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
         Vin v = new Vin("",name,year,color,region,qte,price,ceps);
 
 
-        Log.e("ImplementDB","Implementation de l'ajout de region");
+        Log.e("ImplementDB","Implementation de l'ajout de vin");
         Intent i = new Intent();
         i.putExtra("res",v);
         setResult(RESULT_OK,i);
@@ -141,10 +149,17 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
     }
     private void updateListColor(){
         Spinner spinnerColor = (Spinner)findViewById(R.id.addColorWine);
-        ArrayAdapter<String> adapterColor = new ArrayAdapter<String>(AddWineActivity.this,
+        ArrayAdapter<Couleur> adapterColor = new ArrayAdapter<Couleur>(AddWineActivity.this,
                 android.R.layout.simple_spinner_item,colors);
         adapterColor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerColor.setAdapter(adapterColor);
+    }
+    private void updateListFournisseur(){
+        Spinner spinnerFournisseur = (Spinner)findViewById(R.id.addFournisseurWine);
+        ArrayAdapter<Fournisseur> adapterFournisseur = new ArrayAdapter<Fournisseur>(AddWineActivity.this,
+                android.R.layout.simple_spinner_item,fournisseurs);
+        adapterFournisseur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFournisseur.setAdapter(adapterFournisseur);
     }
 
     //toDelete
@@ -157,6 +172,14 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
         regions.add(new Region("aléatoire"));
         regions.add(new Region("Valais", new Pays("Suisse","CH")));
         regions.add(new Region("Bordeaux",new Pays("France","FR")));
+
+        colors.add(new Couleur("Rouge"));
+        colors.add(new Couleur("Blanc"));
+        colors.add(new Couleur("Rosé"));
+
+        fournisseurs.add(new Fournisseur("Bétrisey","Maxime","Route du plat","max@hevs.com"));
+        fournisseurs.add(new Fournisseur("Rebelo","Hugo","Route de la montagne","hugo@hevs.com"));
+        fournisseurs.add(new Fournisseur("Seligman","Robert","Route de la plaine","robert@hevs.com"));
 
     }
 }

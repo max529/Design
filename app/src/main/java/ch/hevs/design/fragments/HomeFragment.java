@@ -15,13 +15,16 @@ import ch.hevs.design.HomeActivity;
 import ch.hevs.design.R;
 import ch.hevs.design.adapter.WineAdapter;
 import ch.hevs.design.data.Vin;
+import ch.hevs.design.interfaces.DefaultFragment;
 
 /**
  * Created by maxim on 11.04.2017.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements DefaultFragment {
     private HomeActivity activity;
+    private View rootView;
+    private ListView mListView;
     public HomeFragment(){}
 
     public void setActivity(HomeActivity activity){
@@ -32,7 +35,7 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         // The last two arguments ensure LayoutParams are inflated
         // properly.
-        View rootView = inflater.inflate(
+        rootView = inflater.inflate(
                 R.layout.fragment_home, container, false);
 
         mListView = (ListView) rootView.findViewById(R.id.listViewWine);
@@ -54,13 +57,12 @@ public class HomeFragment extends Fragment {
 
         return rootView;
     }
-    ListView mListView;
 
-    private List<Vin> genererVins(){
+
+    @Override
+    public void updateList() {
         List<Vin> vins = activity.vins;
-        for(int i=0;i<20;i++){
-            vins.add(new Vin("","Vin"+i,1980+i));
-        }
-        return vins;
+        WineAdapter adapter = new WineAdapter(rootView.getContext(), vins);
+        mListView.setAdapter(adapter);
     }
 }
