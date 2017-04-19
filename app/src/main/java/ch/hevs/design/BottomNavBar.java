@@ -1,14 +1,12 @@
 package ch.hevs.design;
 
-import android.content.Context;
 import android.support.annotation.IdRes;
-import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
 import android.view.Menu;
 
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
+
+import ch.hevs.design.components.NonSwipeableViewPager;
 
 /**
  * Created by maxim on 11.04.2017.
@@ -49,9 +47,13 @@ public class BottomNavBar {
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
 
 
+
         setAction();
     }
 
+    public void updateFragment(int id){
+
+    }
     public void selectTabAtPositionWithoutLoop(int position){
 
         /*bottomBar.setOnTabSelectListener(null,false);

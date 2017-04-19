@@ -1,4 +1,4 @@
-package ch.hevs.design;
+package ch.hevs.design.components;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

@@ -8,4 +8,12 @@
         android:icon="@drawable/ic_validate"
         app:showAsAction="always"/>
 
+    <item android:actionLayout="@layout/activity_add_place"
+        android:id="@+id/navBtnAddRegion"
+        android:title="@string/add_place"/>
+
+    <item android:actionLayout="@layout/activity_add_cepage"
+        android:id="@+id/navBtnAddCepage"
+        android:title="@string/add_cepage"/>
+
 </menu>

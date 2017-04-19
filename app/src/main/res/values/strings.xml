@@ -8,4 +8,12 @@
     <string name="order_wine">Order Wine</string>
     <string name="title_activity_add_wine">AddWine</string>
     <string name="validate_wine">Validate Wine</string>
+    <string name="year">Year</string>
+    <string name="name">Name</string>
+    <string name="quantity">quantity</string>
+    <string name="price">Price</string>
+    <string name="add_cepage">Add Cepage</string>
+    <string name="add_place">Add Place</string>
+    <string name="validate_place">Validate Place</string>
+    <string name="validate_cepage">Validate Cepage</string>
 </resources>

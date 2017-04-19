@@ -1,13 +1,8 @@
 package ch.hevs.design;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.roughike.bottombar.BottomBar;
 
 import ch.hevs.design.fragments.HomeFragment;
 import ch.hevs.design.fragments.MovementFragment;
@@ -33,7 +28,10 @@ public class CollectionPageAdapter extends FragmentStatePagerAdapter {
 
 
         if(i==0){
-            fragment = new HomeFragment();
+            HomeFragment h = new HomeFragment();
+            h.setActivity(activity);
+            fragment = h;
+
         }else if(i==1){
             fragment = new OrderFragment();
         }else if(i==2){

@@ -1,20 +1,17 @@
 package ch.hevs.design.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import ch.hevs.design.HomeActivity;
 import ch.hevs.design.R;
 import ch.hevs.design.adapter.WineAdapter;
 import ch.hevs.design.data.Vin;
@@ -24,6 +21,13 @@ import ch.hevs.design.data.Vin;
  */
 
 public class HomeFragment extends Fragment {
+    private HomeActivity activity;
+    public HomeFragment(){}
+
+    public void setActivity(HomeActivity activity){
+        this.activity = activity;
+    }
+
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         // The last two arguments ensure LayoutParams are inflated
@@ -42,10 +46,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        List<Vin> tweets = genererVins();
+        List<Vin> vins = activity.vins;
 
 
-        WineAdapter adapter = new WineAdapter(rootView.getContext(), tweets);
+        WineAdapter adapter = new WineAdapter(rootView.getContext(), vins);
         mListView.setAdapter(adapter);
 
         return rootView;
@@ -53,7 +57,7 @@ public class HomeFragment extends Fragment {
     ListView mListView;
 
     private List<Vin> genererVins(){
-        List<Vin> vins = new ArrayList<Vin>();
+        List<Vin> vins = activity.vins;
         for(int i=0;i<20;i++){
             vins.add(new Vin("","Vin"+i,1980+i));
         }

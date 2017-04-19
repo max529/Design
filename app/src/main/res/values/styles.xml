@@ -11,6 +11,12 @@
     <style name="NavStyle">
         <item name="android:background">@color/colorPrimary</item>
     </style>
+    <style name="AppSpinner" parent="@style/Widget.AppCompat.Spinner.Underlined">
+
+    </style>
+    <style name="AppInput" parent="@style/Widget.AppCompat.EditText">
+
+    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

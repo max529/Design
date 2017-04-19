@@ -16,7 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddWineActivity" android:parentActivityName=".HomeActivity"></activity>
+        <activity
+            android:name=".AddWineActivity"
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".AddPlaceActivity"
+            android:parentActivityName=".AddWineActivity"/>
+        <activity
+            android:name=".AddCepageActivity"
+            android:parentActivityName=".AddWineActivity"/>
     </application>
 
 </manifest>

@@ -1,17 +1,14 @@
 package ch.hevs.design.data;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
+import java.io.Serializable;
 import java.util.ArrayList;
-
-import ch.hevs.design.R;
+import java.util.List;
 
 /**
  * Created by hugo on 06.04.2017.
  */
 
-public class Vin {
+public class Vin implements Serializable{
     private String img = "";
     private String name;
     private int annee;
@@ -19,9 +16,9 @@ public class Vin {
     private Region region;
     private int qte;
     private double prix;
-    private ArrayList cepage = new ArrayList<String>();
+    private List<Cepage> cepage = new ArrayList<Cepage>();
 
-    public ArrayList getCepage(){
+    public List<Cepage> getCepage(){
         return cepage;
     }
 
@@ -65,5 +62,16 @@ public class Vin {
         this.img = img;
         this.name = name;
         this.annee = annee;
+    }
+
+    public Vin(String img, String name, int annee, Couleur couleur, Region region, int qte, double prix, List cepage) {
+        this.img = img;
+        this.name = name;
+        this.annee = annee;
+        this.couleur = couleur;
+        this.region = region;
+        this.qte = qte;
+        this.prix = prix;
+        this.cepage = cepage;
     }
 }
