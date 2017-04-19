@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Database extends SQLiteOpenHelper {
 
-    private static final String LOG = "Database";
+    private static final String LOG = "Tables";
 
     private static final int DATABASE_VERSION = 1;
 
