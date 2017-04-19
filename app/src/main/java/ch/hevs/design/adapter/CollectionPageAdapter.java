@@ -1,9 +1,10 @@
-package ch.hevs.design;
+package ch.hevs.design.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import ch.hevs.design.HomeActivity;
 import ch.hevs.design.fragments.HomeFragment;
 import ch.hevs.design.fragments.MovementFragment;
 import ch.hevs.design.fragments.OrderFragment;
@@ -23,15 +24,10 @@ public class CollectionPageAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         Fragment fragment = null;
 
-        BottomNavBar bottomNavBar = activity.bottomNavBar;
-        bottomNavBar.selectTabAtPositionWithoutLoop(i);
-
-
         if(i==0){
             HomeFragment h = new HomeFragment();
             h.setActivity(activity);
             fragment = h;
-
         }else if(i==1){
             fragment = new OrderFragment();
         }else if(i==2){

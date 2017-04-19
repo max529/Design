@@ -21,10 +21,11 @@
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".AddPlaceActivity"
-            android:parentActivityName=".AddWineActivity"/>
+            android:parentActivityName=".AddWineActivity" />
         <activity
             android:name=".AddCepageActivity"
-            android:parentActivityName=".AddWineActivity"/>
+            android:parentActivityName=".AddWineActivity" />
+        <activity android:name=".DetailVinActivity"></activity>
     </application>
 
 </manifest>

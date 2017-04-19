@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ch.hevs.design.R;
+import ch.hevs.design.interfaces.DefaultFragment;
 
 /**
  * Created by maxim on 11.04.2017.
  */
 
-public class OrderFragment extends Fragment {
+public class OrderFragment extends Fragment implements DefaultFragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         // The last two arguments ensure LayoutParams are inflated
@@ -21,5 +22,10 @@ public class OrderFragment extends Fragment {
                 R.layout.fragment_order, container, false);
 
         return rootView;
+    }
+
+    @Override
+    public void updateList() {
+
     }
 }
