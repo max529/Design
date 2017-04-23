@@ -11,33 +11,18 @@ import java.util.List;
 public class Vin implements Serializable{
     private String img = "";
     private String name;
+    private String description = "";
     private int annee;
     private Couleur couleur;
     private Region region;
     private int qte;
     private double prix;
     private List<Cepage> cepage = new ArrayList<Cepage>();
-
-    public List<Cepage> getCepage(){
-        return cepage;
-    }
-
-    public void setCepage(ArrayList cepage){
-        this.cepage = cepage;
-    }
-    private Fournisseur fournisseur;
-
-    public Fournisseur getFournisseur(){
-        return fournisseur;
-    }
-    public void setFournisseur(Fournisseur fournisseur){
-        this.fournisseur = fournisseur;
-    }
+    private Provider provider = null;
 
     public String getImg() {
         return img;
     }
-
     public void setImg(String img) {
         this.img = img;
     }
@@ -45,17 +30,52 @@ public class Vin implements Serializable{
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
     public int getAnnee() {
         return annee;
     }
-
     public void setAnnee(int annee) {
         this.annee = annee;
+    }
+
+    public Couleur getCouleur() { return couleur; }
+    public void setCouleur(Couleur couleur) { this.couleur = couleur; }
+
+    public Region getRegion() { return region; }
+    public void setRegion(Region region) { this.region = region; }
+
+    public int getQte() { return qte; }
+    public void setQte(int qte) { this.qte = qte; }
+
+    public double getPrix() { return prix; }
+    public void setPrix(double prix) { this.prix = prix; }
+
+    public List<Cepage> getCepage(){
+        return cepage;
+    }
+    public String getCepageString(){
+        String res = "";
+        for(Cepage c : cepage){
+            res += c.getNom()+", ";
+        }
+        res = res.substring(0,res.length()-2);
+        return res;
+    }
+    public void setCepage(List<Cepage> cepage){
+        this.cepage = cepage;
+    }
+
+    public Provider getProvider(){
+        return provider;
+    }
+    public void setProvider(Provider provider){
+        this.provider = provider;
     }
 
     public Vin(String img, String name, int annee){
@@ -64,14 +84,29 @@ public class Vin implements Serializable{
         this.annee = annee;
     }
 
-    public Vin(String img, String name, int annee, Couleur couleur, Region region, int qte, double prix, List cepage) {
+
+
+    public Vin(String img, String name, String description, int annee, Couleur couleur, Region region, int qte, double prix, List cepage) {
         this.img = img;
         this.name = name;
+        this.description = description;
         this.annee = annee;
         this.couleur = couleur;
         this.region = region;
         this.qte = qte;
         this.prix = prix;
         this.cepage = cepage;
+    }
+    public Vin(String img, String name, String description, int annee, Couleur couleur, Region region, int qte, double prix, List cepage,Provider provider) {
+        this.img = img;
+        this.name = name;
+        this.description = description;
+        this.annee = annee;
+        this.couleur = couleur;
+        this.region = region;
+        this.qte = qte;
+        this.prix = prix;
+        this.cepage = cepage;
+        this.provider = provider;
     }
 }

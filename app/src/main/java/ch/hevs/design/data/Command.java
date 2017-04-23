@@ -1,6 +1,5 @@
 package ch.hevs.design.data;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,7 +8,7 @@ import java.util.Date;
  */
 
 public class Command {
-    private Fournisseur fournisseur;
+    private Provider provider;
     private Date date;
     private int etat;
     private ArrayList vin = new ArrayList<String>();

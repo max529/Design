@@ -16,4 +16,8 @@
     <string name="add_place">Add Place</string>
     <string name="validate_place">Validate Place</string>
     <string name="validate_cepage">Validate Cepage</string>
+    <string name="description">description</string>
+    <string name="stock_restant_pce">Stock restant : %1$dpce</string>
+    <string name="originaire_de">Originaire de %1$s</string>
+    <string name="compos_de">Composé de : %1$s</string>
 </resources>

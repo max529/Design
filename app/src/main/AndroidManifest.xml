@@ -25,7 +25,9 @@
         <activity
             android:name=".AddCepageActivity"
             android:parentActivityName=".AddWineActivity" />
-        <activity android:name=".DetailVinActivity"></activity>
+        <activity
+            android:name=".DetailVinActivity"
+            android:parentActivityName=".HomeActivity" />
     </application>
 
 </manifest>

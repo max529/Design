@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by hugo on 06.04.2017.
  */
 
-public class Provider implements Serializable{
+public class Provider implements Serializable {
     private String name;
     private String surname;
     private String adress;
@@ -22,13 +22,11 @@ public class Provider implements Serializable{
 
     @Override
     public String toString() {
-        return this.surname+" "+this.name;
-    }
-    }
-
-    public void insert ()
-    {
-        
+        return this.surname + " " + this.name;
     }
 
+    public void insert() {
+
+    }
+}
 

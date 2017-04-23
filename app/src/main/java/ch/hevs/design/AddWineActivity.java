@@ -16,8 +16,8 @@ import java.util.List;
 import ch.hevs.design.components.MultiSpinner;
 import ch.hevs.design.data.Cepage;
 import ch.hevs.design.data.Couleur;
-import ch.hevs.design.data.Fournisseur;
 import ch.hevs.design.data.Pays;
+import ch.hevs.design.data.Provider;
 import ch.hevs.design.data.Region;
 import ch.hevs.design.data.Vin;
 
@@ -28,7 +28,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
     private List<Couleur> colors = new ArrayList<Couleur>();
     private List<Region> regions = new ArrayList<Region>();
     private List<Cepage> cepages = new ArrayList<Cepage>();
-    private List<Fournisseur> fournisseurs = new ArrayList<Fournisseur>();
+    private List<Provider> providers = new ArrayList<Provider>();
 
 
 
@@ -101,6 +101,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
 
     private void validateWine(){
         String name = ((EditText)findViewById(R.id.addNameWine)).getText().toString();
+        String description = ((EditText)findViewById(R.id.addDescrWine)).getText().toString();
         int year = parseInt(((EditText)findViewById(R.id.addYearWine)).getText().toString());
         Spinner spinnerColor = (Spinner)findViewById(R.id.addColorWine);
         Couleur color = (Couleur)spinnerColor.getSelectedItem();
@@ -115,11 +116,13 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
             Cepage cTemp = (Cepage)o;
             ceps.add(cTemp);
         }
+        Spinner spinnerFournisseur = (Spinner)findViewById(R.id.addFournisseurWine);
+        Provider provider = (Provider)spinnerFournisseur.getSelectedItem();
 
         //implentation des controls
 
 
-        Vin v = new Vin("",name,year,color,region,qte,price,ceps);
+        Vin v = new Vin("",name,description,year,color,region,qte,price,ceps,provider);
 
 
         Log.e("ImplementDB","Implementation de l'ajout de vin");
@@ -156,8 +159,8 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
     }
     private void updateListFournisseur(){
         Spinner spinnerFournisseur = (Spinner)findViewById(R.id.addFournisseurWine);
-        ArrayAdapter<Fournisseur> adapterFournisseur = new ArrayAdapter<Fournisseur>(AddWineActivity.this,
-                android.R.layout.simple_spinner_item,fournisseurs);
+        ArrayAdapter<Provider> adapterFournisseur = new ArrayAdapter<Provider>(AddWineActivity.this,
+                android.R.layout.simple_spinner_item,providers);
         adapterFournisseur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFournisseur.setAdapter(adapterFournisseur);
     }
@@ -177,9 +180,9 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
         colors.add(new Couleur("Blanc"));
         colors.add(new Couleur("Rosé"));
 
-        fournisseurs.add(new Fournisseur("Bétrisey","Maxime","Route du plat","max@hevs.com"));
-        fournisseurs.add(new Fournisseur("Rebelo","Hugo","Route de la montagne","hugo@hevs.com"));
-        fournisseurs.add(new Fournisseur("Seligman","Robert","Route de la plaine","robert@hevs.com"));
+        providers.add(new Provider("Bétrisey","Maxime","Route du plat","max@hevs.com"));
+        providers.add(new Provider("Rebelo","Hugo","Route de la montagne","hugo@hevs.com"));
+        providers.add(new Provider("Seligman","Robert","Route de la plaine","robert@hevs.com"));
 
     }
 }

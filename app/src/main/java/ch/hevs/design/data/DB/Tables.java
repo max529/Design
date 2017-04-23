@@ -19,8 +19,8 @@ public final class Tables {
         public static final String TABLE_CEPAGE = "cepages";
 
         //Cepages Column names
-        private static final String key_id = "idCepage";
-        private static final String nameCepage ="name";
+        public static final String key_id = "idCepage";
+        public static final String nameCepage ="name";
 
         //Database creation sql statement product
         public static final String CREATE_TABLE_CEPAGE = "CREATE TABLE"
@@ -35,10 +35,10 @@ public final class Tables {
         public static final String TABLE_COMMAND = "command";
 
         //Command Column names
-        private static final String key_id = "idCommand";
-        private static final String idProvider = "idProvider";
-        private static final String date = "date";
-        private static final String etat = "etat";
+        public static final String key_id = "idCommand";
+        public static final String idProvider = "idProvider";
+        public static final String date = "date";
+        public static final String etat = "etat";
 
         //Database creation sql statement product
         public static final String CREATE_TABLE_COMMAND= "CREATE TABLE"
@@ -55,11 +55,11 @@ public final class Tables {
         public static final String TABLE_PROVIDER= "provider";
 
         //Provider Column names
-        private static final String key_id = "idProvider";
-        private static final String nameProvider = "name";
-        private static final String surnameProvider = "Surname";
-        private static final String address = "address";
-        private static final String email = "email";
+        public static final String key_id = "idProvider";
+        public static final String nameProvider = "name";
+        public static final String surnameProvider = "Surname";
+        public static final String address = "address";
+        public static final String email = "email";
 
         //Database creation sql statement product
         public static final String CREATE_TABLE_PROVIDER = "CREATE TABLE"
@@ -76,12 +76,12 @@ public final class Tables {
         public static final String TABLE_MOVEMENT= "movement";
 
         //Movement Column names
-        private static final String key_id = "idMovement";
-        private static final String key_vin = "idWine";
-        private static final String dateMovement = "date";
-        private static final String key_boolean = "in";
-        private static final String quantity = "quantity";
-        private static final String wording = "wording";
+        public static final String key_id = "idMovement";
+        public static final String key_vin = "idWine";
+        public static final String dateMovement = "date";
+        public static final String key_boolean = "in";
+        public static final String quantity = "quantity";
+        public static final String wording = "wording";
 
         //Database creation sql statement product
         public static final String CREATE_TABLE_MOVEMENT = "CREATE TABLE"
@@ -99,9 +99,9 @@ public final class Tables {
         public static final String TABLE_COUNTRY= "country";
 
         //Country Column names
-        private static final String key_id = "idMovement";
-        private static final String nameCountry = "name";
-        private static final String initial = "initial of country";
+        public static final String key_id = "idMovement";
+        public static final String nameCountry = "name";
+        public static final String initial = "initial of country";
 
         //Database creation sql statement product
         public static final String CREATE_TABLE_COUNTRY = "CREATE TABLE"
@@ -116,9 +116,9 @@ public final class Tables {
         public static final String TABLE_REGION= "region";
 
         //Region Column names
-        private static final String key_id = "idMovement";
-        private static final String idCountry= "idCountry";
-        private static final String region = "name";
+        public static final String key_id = "idMovement";
+        public static final String idCountry= "idCountry";
+        public static final String region = "name";
 
         //Database creation sql statement product
         public static final String CREATE_TABLE_REGION = "CREATE TABLE"
@@ -133,11 +133,11 @@ public final class Tables {
         public static final String TABLE_WINE= "wine";
 
         //Wine Column names
-        private static final String key_id = "idMovement";
-        private static final String years = "years";
-        private static final String idRegion = "ID Region";
-        private static final String quantity = "quantity";
-        private static final String price = "Price";
+        public static final String key_id = "idMovement";
+        public static final String years = "years";
+        public static final String idRegion = "ID Region";
+        public static final String quantity = "quantity";
+        public static final String price = "Price";
 
         //Database creation sql statement product
         public static final String CREATE_TABLE_WINE = "CREATE TABLE"

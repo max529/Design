@@ -12,7 +12,7 @@ public class Region implements Serializable{
 
     public Region(String nom){
         this.nom = nom;
-        this.pays = new Pays("Unknow","");
+        this.pays = new Pays("Unknow","UN");
     }
     public Region(String nom, Pays pays){
         this.pays = pays;

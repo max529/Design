@@ -1,8 +1,8 @@
 package ch.hevs.design.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import ch.hevs.design.DetailVinActivity;
 import ch.hevs.design.HomeActivity;
 import ch.hevs.design.R;
 import ch.hevs.design.adapter.WineAdapter;
@@ -45,7 +46,9 @@ public class HomeFragment extends Fragment implements DefaultFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
                 view.setSelected(true);
                 Vin v = (Vin)mListView.getItemAtPosition(position);
-                Log.e("maxDeb",v.getName());
+                Intent intent = new Intent(activity, DetailVinActivity.class);
+                intent.putExtra("Vin",v);
+                activity.startActivity(intent);
             }
         });
 
