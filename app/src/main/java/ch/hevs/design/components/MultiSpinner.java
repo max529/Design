@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hevs.design.data.Cepage;
+
 /**
  * Created by maxim on 18.04.2017.
  */
@@ -44,19 +46,17 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner imp
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        // refresh text on spinner
         StringBuffer spinnerBuffer = new StringBuffer();
-        boolean someUnselected = false;
+        boolean displayDefault = true;
         for (int i = 0; i < items.size(); i++) {
             if (selected[i] == true) {
                 spinnerBuffer.append(items.get(i));
                 spinnerBuffer.append(", ");
-            } else {
-                someUnselected = true;
+                displayDefault = false;
             }
         }
         String spinnerText;
-        if (someUnselected) {
+        if (!displayDefault) {
             spinnerText = spinnerBuffer.toString();
             if (spinnerText.length() > 2)
                 spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
@@ -120,6 +120,37 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner imp
             l.add(o.toString());
         }
         setItems(l,allText,listener);
+    }
+    public void setItemsTrue(List itemsTrue){
+        for(Object o : itemsTrue){
+            Cepage c = (Cepage)o;
+            String temp = c.toString();
+            int i = items.indexOf(temp);
+            selected[i] = true;
+        }
+
+        StringBuffer spinnerBuffer = new StringBuffer();
+        boolean displayDefault = true;
+        for (int i = 0; i < items.size(); i++) {
+            if (selected[i] == true) {
+                spinnerBuffer.append(items.get(i));
+                spinnerBuffer.append(", ");
+                displayDefault = false;
+            }
+        }
+        String spinnerText;
+        if (!displayDefault) {
+            spinnerText = spinnerBuffer.toString();
+            if (spinnerText.length() > 2)
+                spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
+        } else {
+            spinnerText = defaultText;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_spinner_item,
+                new String[] { spinnerText });
+        setAdapter(adapter);
+        listener.onItemsSelected(selected);
     }
     public List<Object> getSelectedItems(){
         List<Object> l = new ArrayList<Object>();

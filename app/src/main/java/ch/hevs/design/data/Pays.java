@@ -7,8 +7,17 @@ import java.io.Serializable;
  */
 
 public class Pays implements Serializable {
+    private int _id;
     private String nom;
     private String initial;
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
 
     public String getNom() {
         return nom;
@@ -26,6 +35,7 @@ public class Pays implements Serializable {
         this.initial = initial;
     }
 
+    public Pays(){}
     public Pays(String nom, String initial){
         this.initial = initial;
         this.nom = nom;
@@ -34,5 +44,17 @@ public class Pays implements Serializable {
     @Override
     public String toString() {
         return this.nom;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Pays)){
+            return false;
+        }
+        Pays p = (Pays)obj;
+        if(this.nom.equals(p.getNom())){
+            return true;
+        }
+        return false;
     }
 }

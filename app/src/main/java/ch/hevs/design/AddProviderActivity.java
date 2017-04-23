@@ -8,27 +8,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import ch.hevs.design.data.Cepage;
-
 import static ch.hevs.design.HomeActivity.db;
 
-public class AddCepageActivity extends AppCompatActivity {
+public class AddProviderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_cepage);
-        this.setTitle(R.string.add_cepage);
+        setContentView(R.layout.activity_add_provider);
+        this.setTitle(getString(R.string.add_provider));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_cepage, menu);
+        getMenuInflater().inflate(R.menu.add_provider, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.navBtnValidateAddCepage){
-            valideCepage();
+        if(item.getItemId() == R.id.navBtnValidateAddProvider){
+            valideProvider();
         }else if(item.getItemId() == android.R.id.home){
             Log.e("finis","fi");
             this.onBackPressed();
@@ -37,11 +35,15 @@ public class AddCepageActivity extends AppCompatActivity {
         return true;
     }
 
-    private void valideCepage(){
-        String name = ((EditText)findViewById(R.id.addNameCepage)).getText().toString();
-        db.insertCepage(name);
+    private void valideProvider() {
+        String name = ((EditText)findViewById(R.id.addNameProvider)).getText().toString();
+        String surname = ((EditText)findViewById(R.id.addSurnameProvider)).getText().toString();
+        String address = ((EditText)findViewById(R.id.addAdressProvider)).getText().toString();
+        String email = ((EditText)findViewById(R.id.addEmailProvider)).getText().toString();
+
+        db.insertProvider(name,surname,address,email);
+
         Intent i = new Intent();
-        i.putExtra("res",new Cepage(name));
         setResult(RESULT_OK,i);
         finish();
     }

@@ -9,6 +9,7 @@ import java.util.List;
  */
 
 public class Vin implements Serializable{
+    private int _id;
     private String img = "";
     private String name;
     private String description = "";
@@ -19,6 +20,9 @@ public class Vin implements Serializable{
     private double prix;
     private List<Cepage> cepage = new ArrayList<Cepage>();
     private Provider provider = null;
+
+    public int get_id() { return _id; }
+    public void set_id(int _id) { this._id = _id; }
 
     public String getImg() {
         return img;
@@ -78,6 +82,7 @@ public class Vin implements Serializable{
         this.provider = provider;
     }
 
+    public Vin(){}
     public Vin(String img, String name, int annee){
         this.img = img;
         this.name = name;
@@ -108,5 +113,22 @@ public class Vin implements Serializable{
         this.prix = prix;
         this.cepage = cepage;
         this.provider = provider;
+    }
+
+    @Override
+    public String toString() {
+        return "Vin{" +
+                "_id=" + _id +
+                ", img='" + img + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", annee=" + annee +
+                ", couleur=" + couleur +
+                ", region=" + region +
+                ", qte=" + qte +
+                ", prix=" + prix +
+                ", cepage=" + cepage +
+                ", provider=" + provider +
+                '}';
     }
 }

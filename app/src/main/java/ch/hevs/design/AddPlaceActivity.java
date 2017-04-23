@@ -10,21 +10,24 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.hevs.design.data.Pays;
 import ch.hevs.design.data.Region;
 
+import static ch.hevs.design.HomeActivity.db;
+
 public class AddPlaceActivity extends AppCompatActivity {
-    private Pays[] pays = {
-            new Pays("Suisse","CH"),
-            new Pays("France","FR"),
-            new Pays("Italie","IT")
-    };
+    private List<Pays> pays = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_place);
         this.setTitle(R.string.add_place);
+
+        pays = db.getCountries();
 
         Spinner spinnerPays = (Spinner)findViewById(R.id.addCountryPlace);
         ArrayAdapter<Pays> adapterPays = new ArrayAdapter<Pays>(AddPlaceActivity.this,
@@ -41,6 +44,10 @@ public class AddPlaceActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.navBtnValidateAddPlace){
             valideRegion();
+        }else if(item.getItemId() == android.R.id.home){
+            Log.e("finis","fi");
+            this.onBackPressed();
+            return true;
         }
         return true;
     }
@@ -51,6 +58,8 @@ public class AddPlaceActivity extends AppCompatActivity {
         Pays p = (Pays)spinnerPays.getSelectedItem();
 
         Log.e("ImplementDB","Implementation de l'ajout de region");
+        db.insertRegion(p.get_id(),name);
+
         Intent i = new Intent();
         i.putExtra("res",new Region(name,p));
         setResult(RESULT_OK,i);

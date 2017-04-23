@@ -20,4 +20,15 @@
     <string name="stock_restant_pce">Stock restant : %1$dpce</string>
     <string name="originaire_de">Originaire de %1$s</string>
     <string name="compos_de">Composé de : %1$s</string>
+    <string name="edit_wine">Edit wine</string>
+    <string name="cepage_choice">Cepage Choice</string>
+    <string name="provider_name">Provider Name</string>
+    <string name="provider_surname">Provider Surname</string>
+    <string name="provider_address">Provider Address</string>
+    <string name="provider_email">Provider Email</string>
+    <string name="add_provider">Add Provider</string>
+    <string name="validate_provider">Validate Provider</string>
+    <string name="red">Red</string>
+    <string name="white">White</string>
+    <string name="pink">Pink</string>
 </resources>

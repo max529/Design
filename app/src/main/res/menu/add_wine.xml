@@ -16,4 +16,8 @@
         android:id="@+id/navBtnAddCepage"
         android:title="@string/add_cepage"/>
 
+    <item android:actionLayout="@layout/activity_add_provider"
+        android:id="@+id/navBtnAddProvider"
+        android:title="@string/add_provider"/>
+
 </menu>

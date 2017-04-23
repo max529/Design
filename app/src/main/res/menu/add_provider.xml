@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item android:actionLayout="@layout/activity_add_wine"
+        android:id="@+id/navBtnValidateAddProvider"
+        android:title="@string/validate_provider"
+        android:icon="@drawable/ic_validate"
+        app:showAsAction="always"/>
+</menu>

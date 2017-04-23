@@ -28,6 +28,9 @@
         <activity
             android:name=".DetailVinActivity"
             android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".AddProviderActivity"
+            android:parentActivityName=".AddWineActivity" ></activity>
     </application>
 
 </manifest>
