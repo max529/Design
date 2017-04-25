@@ -159,7 +159,6 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
             ImageView my_img_view = (ImageView ) findViewById (R.id.addShowWineImg);
             my_img_view.setImageBitmap(bitmap);
-            Log.e("debug",bitmap.getHeight()+"");
         } catch (IOException e) {
             e.printStackTrace();
         }
