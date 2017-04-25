@@ -28,6 +28,10 @@ public final class Tables {
                 + nameCepage + " TEXT NOT NULL" +" );";
     }
 
+
+
+
+
     //---------- COMMAND TABLE ----------
     public static abstract class TableCommand implements BaseColumns{
 
@@ -36,17 +40,22 @@ public final class Tables {
 
         //Command Column names
         public static final String key_id = "idCommand";
-        public static final String idProvider = "idProvider";
-        public static final String date = "date";
-        public static final String etat = "etat";
+        public static final String idWine = "idWine";
+        public static final String qte = "qte";
+        public static final String state = "state";
 
         //Database creation sql statement product
         public static final String CREATE_TABLE_COMMAND= "CREATE TABLE "
                 + TABLE_COMMAND + "(" + key_id +" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + idProvider + " INTEGER, "
-                + date + " DATE, "
-                + etat + " TEXT NOT NULL" +" );";
+                + idWine + " INTEGER, "
+                + qte + " INTEGER, "
+                + state + " INTEGER" +" );";
     }
+
+
+
+
+
 
     //---------- PROVIDER TABLE ----------
     public static abstract class TableProvider implements BaseColumns{
@@ -69,6 +78,12 @@ public final class Tables {
                 + address + " TEXT NOT NULL, "
                 + email + " VARCHAR" +" );";
     }
+
+
+
+
+
+
     //---------- MOVEMENT TABLE ----------
     public static abstract class TableMovemement implements BaseColumns{
 
@@ -92,6 +107,11 @@ public final class Tables {
                 + quantity + " INTEGER, "
                 + wording + " TEXT NOT NULL" +" );";
     }
+
+
+
+
+
     //---------- COUNTRY TABLE ----------
     public static abstract class TableCountry implements BaseColumns{
 
@@ -110,6 +130,11 @@ public final class Tables {
                 + initial + " TEXT NOT NULL" +" );";
         public static final String DEFAULT_INSERTION = "INSERT INTO "+ TABLE_COUNTRY+" ("+nameCountry+","+initial+") VALUES ('Suisse','CH'), ('France','FR'), ('Italie','IT')";
     }
+
+
+
+
+
     //---------- REGION TABLE ----------
     public static abstract class TableRegion implements BaseColumns{
 
@@ -128,6 +153,11 @@ public final class Tables {
                 + region + " TEXT NOT NULL" +" );";
 
     }
+
+
+
+
+
     //---------- Wine TABLE ----------
     public static abstract class TableWine implements BaseColumns{
 
@@ -159,6 +189,10 @@ public final class Tables {
                 + price + " DECIMAL, "
                 + idProvider + " INTEGER" +" );";
     }
+
+
+
+
 
     //---------- Wine-Cepage TABLE ----------
     public static abstract class TableWineCepage implements BaseColumns{

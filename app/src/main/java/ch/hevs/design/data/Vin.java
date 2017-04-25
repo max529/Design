@@ -117,18 +117,6 @@ public class Vin implements Serializable{
 
     @Override
     public String toString() {
-        return "Vin{" +
-                "_id=" + _id +
-                ", img='" + img + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", annee=" + annee +
-                ", couleur=" + couleur +
-                ", region=" + region +
-                ", qte=" + qte +
-                ", prix=" + prix +
-                ", cepage=" + cepage +
-                ", provider=" + provider +
-                '}';
+        return this.name+" ("+this.provider.toString()+")";
     }
 }

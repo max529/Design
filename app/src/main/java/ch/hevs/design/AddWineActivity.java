@@ -121,7 +121,6 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
 
     // retour des activités enfants
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("maxDeb","Je suis de");
         if(resultCode==RESULT_OK){
             Object a = data.getSerializableExtra("res");
             if(requestCode==1){

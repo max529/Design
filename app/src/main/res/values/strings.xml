@@ -31,4 +31,8 @@
     <string name="red">Red</string>
     <string name="white">White</string>
     <string name="pink">Pink</string>
+    <string name="add_order">Add Order</string>
+    <string name="validate_order">Validate Order</string>
+    <string name="received">Received</string>
+    <string name="cancel">Cancel</string>
 </resources>

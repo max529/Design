@@ -3,7 +3,6 @@ package ch.hevs.design.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,7 @@ public class WineAdapter extends ArrayAdapter<Vin> {
         viewHolder.name.setText(vin.getName());
         viewHolder.annee.setText(vin.getAnnee()+"");
         String pathImg = vin.getImg();
-        if(pathImg==""){
+        if(pathImg== null || pathImg==""){
             viewHolder.avatar.setImageResource(R.drawable.wine_default);
         }else{
             Bitmap bMap = BitmapFactory.decodeFile(vin.getImg());

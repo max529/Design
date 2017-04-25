@@ -13,6 +13,7 @@ import java.util.List;
 import ch.hevs.design.HomeActivity;
 import ch.hevs.design.components.SerializeList;
 import ch.hevs.design.data.Cepage;
+import ch.hevs.design.data.Command;
 import ch.hevs.design.data.Couleur;
 import ch.hevs.design.data.Pays;
 import ch.hevs.design.data.Provider;
@@ -22,6 +23,8 @@ import ch.hevs.design.data.Vin;
 import static ch.hevs.design.data.DB.Tables.TableCountry.TABLE_COUNTRY;
 import static ch.hevs.design.data.DB.Tables.TableCountry.initial;
 import static ch.hevs.design.data.DB.Tables.TableCountry.nameCountry;
+import static ch.hevs.design.data.DB.Tables.TableRegion.idCountry;
+import static ch.hevs.design.data.DB.Tables.TableWine.idProvider;
 
 
 /**
@@ -67,6 +70,12 @@ public class dbHelper extends SQLiteOpenHelper {
         //CREATE NEW TABLE
         onCreate(db);
     }
+
+
+
+
+
+
     //-- Insert -- / -- Delete -- / -- Update -- / -- PROVIDER --
 
     public void insertProvider (String name, String surname, String address, String email){
@@ -138,6 +147,12 @@ public class dbHelper extends SQLiteOpenHelper {
         return res;
     }
 
+
+
+
+
+
+
     //-- Insert -- / -- Delete -- / -- Update -- / -- CEPAGE --
 
     public void insertCepage(String name){
@@ -190,19 +205,93 @@ public class dbHelper extends SQLiteOpenHelper {
         return res;
     }
 
+
+
+
+
+
+
     //-- Insert -- / -- Delete -- / -- Update -- / -- COMMAND --
 
-    public void insertCommand(String idProvider, String date, String etat){
+    public void insertCommand(int idWine, int qte, int state){
         SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(Tables.TableCommand.idProvider, idProvider);
-        values.put(Tables.TableCommand.date, date);
-        values.put(Tables.TableCommand.etat, etat);
-
-        db.insert(Tables.TableCommand.CREATE_TABLE_COMMAND,null, values);
+        String sql = "INSERT INTO "+ Tables.TableCommand.TABLE_COMMAND+" ("+Tables.TableCommand.idWine+","+ Tables.TableCommand.qte+","+ Tables.TableCommand.state+") VALUES ('"+idWine+"',"+qte+","+state+")";
+        db.execSQL(sql);
     }
+    public List<Command> getCommands(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String table = Tables.TableCommand.TABLE_COMMAND;
+        String[] columns = {
+                Tables.TableCommand.key_id,
+                Tables.TableCommand.idWine,
+                Tables.TableCommand.qte,
+                Tables.TableCommand.state
+
+        };
+        String selection = Tables.TableCommand.state+"=?";
+        String[] selectionArgs = {"0"};
+        String groupBy = null;
+        String having = null;
+        String orderBy = Tables.TableCommand.key_id;
+        String limit = null;
+
+        Cursor cursor = db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
+        List<Command> res = new ArrayList<Command>();
+        while(cursor.moveToNext()){
+            Command c = new Command();
+            c.set_id(cursor.getInt(0));
+            c.setVin(getWine(cursor.getInt(1)));
+            c.setQte(cursor.getInt(2));
+            c.setState(cursor.getInt(3));
+            res.add(c);
+        }
+        return res;
+    }
+    public void deleteCommand(int _id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "DELETE FROM "+ Tables.TableCommand.TABLE_COMMAND+" WHERE "+ Tables.TableCommand.key_id+"="+_id;
+        db.execSQL(sql);
+    }
+    public void receivedCommand(int _id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "UPDATE "+ Tables.TableCommand.TABLE_COMMAND+" SET "+ Tables.TableCommand.state+"=1 WHERE "+ Tables.TableCommand.key_id+"="+_id;
+        db.execSQL(sql);
+        Command c = getCommand(_id);
+        sql = "UPDATE "+ Tables.TableWine.TABLE_WINE+" SET "+Tables.TableWine.quantity+"="+Tables.TableWine.quantity+"+"+c.getQte()+" WHERE "+ Tables.TableWine.key_id+"="+c.getVin().get_id();
+        Log.e("debug",sql);
+        db.execSQL(sql);
+    }
+    public Command getCommand(int _id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String table = Tables.TableCommand.TABLE_COMMAND;
+        String[] columns = {
+                Tables.TableCommand.key_id,
+                Tables.TableCommand.idWine,
+                Tables.TableCommand.state,
+                Tables.TableCommand.qte
+        };
+        String selection = Tables.TableCommand.key_id+"=?";
+        String[] selectionArgs = {_id+""};
+        String groupBy = null;
+        String having = null;
+        String orderBy = null;
+        String limit = null;
+
+        Cursor cursor = db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
+        cursor.moveToFirst();
+        Command c = new Command();
+        c.set_id(cursor.getInt(0));
+        c.setVin(getWine(cursor.getInt(1)));
+        c.setState(cursor.getInt(2));
+        c.setQte(cursor.getInt(3));
+        return c;
+    }
+
+
+
+
+
 
     //-- Insert -- / -- Delete -- / -- Update -- / -- COUNTRY --
 
@@ -245,6 +334,12 @@ public class dbHelper extends SQLiteOpenHelper {
         return res;
     }
 
+
+
+
+
+
+
     //-- Insert -- / -- Delete -- / -- Update -- / -- MOVEMENT --
 
     public void insertMovement(String idWine, String date, String status, String quantity , String wording){
@@ -261,6 +356,12 @@ public class dbHelper extends SQLiteOpenHelper {
         db.insert(Tables.TableMovemement.CREATE_TABLE_MOVEMENT,null, values);
     }
 
+
+
+
+
+
+
     //-- Insert -- / -- Delete -- / -- Update -- / -- REGION --
 
     public void insertRegion(int idCountry, String name){
@@ -273,7 +374,7 @@ public class dbHelper extends SQLiteOpenHelper {
         String table = Tables.TableRegion.TABLE_REGION;
         String country = Tables.TableCountry.TABLE_COUNTRY;
 
-        String MY_QUERY = "SELECT * FROM "+table+" a INNER JOIN "+country+" b ON a."+ Tables.TableRegion.idCountry+"=b."+ Tables.TableCountry.key_id+
+        String MY_QUERY = "SELECT * FROM "+table+" a INNER JOIN "+country+" b ON a."+ idCountry+"=b."+ Tables.TableCountry.key_id+
                             " WHERE "+ Tables.TableRegion.key_id+" = "+_id+
                             " ORDER BY "+ Tables.TableRegion.region;
 
@@ -298,7 +399,7 @@ public class dbHelper extends SQLiteOpenHelper {
         String table = Tables.TableRegion.TABLE_REGION;
         String country = Tables.TableCountry.TABLE_COUNTRY;
 
-        String MY_QUERY = "SELECT * FROM "+table+" a INNER JOIN "+country+" b ON a."+ Tables.TableRegion.idCountry+"=b."+ Tables.TableCountry.key_id + " ORDER BY "+ Tables.TableCountry.nameCountry;
+        String MY_QUERY = "SELECT * FROM "+table+" a INNER JOIN "+country+" b ON a."+ idCountry+"=b."+ Tables.TableCountry.key_id + " ORDER BY "+ Tables.TableCountry.nameCountry;
 
         Cursor c = db.rawQuery(MY_QUERY, null);
         List<Region> res = new ArrayList<Region>();
@@ -318,6 +419,11 @@ public class dbHelper extends SQLiteOpenHelper {
         }
         return res;
     }
+
+
+
+
+
 
     //-- Insert -- / -- Delete -- / -- Update -- / -- WINE --
 
@@ -362,6 +468,35 @@ public class dbHelper extends SQLiteOpenHelper {
         }
 
     }
+    public Vin getWine(int _id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String table = Tables.TableWine.TABLE_WINE;
+        List<Couleur> colors = HomeActivity.colors;
+
+        String MY_QUERY = "SELECT * FROM "+table+" WHERE "+ Tables.TableWine.quantity +"> 0 AND "+ Tables.TableWine.key_id+"="+_id+" ORDER BY "+ Tables.TableWine.name;
+        Cursor c = db.rawQuery(MY_QUERY, null);
+        c.moveToFirst();
+        Vin v = new Vin();
+        v.set_id(c.getInt(c.getColumnIndex(Tables.TableWine.key_id)));
+        //v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
+        v.setName(c.getString(c.getColumnIndex(Tables.TableWine.name)));
+        v.setAnnee(c.getInt(c.getColumnIndex(Tables.TableWine.years)));
+        v.setDescription(c.getString(c.getColumnIndex(Tables.TableWine.description)));
+        v.setCouleur(colors.get(c.getInt(c.getColumnIndex(Tables.TableWine.color))));
+
+        Region r = getRegion(c.getInt(c.getColumnIndex(Tables.TableWine.idRegion)));
+        v.setRegion(r);
+
+        v.setQte(c.getInt(c.getColumnIndex(Tables.TableWine.quantity)));
+        v.setPrix(c.getDouble(c.getColumnIndex(Tables.TableWine.price)));
+
+        Provider p = getProvider(c.getInt(c.getColumnIndex(idProvider)));
+        v.setProvider(p);
+
+        v.setCepage(getCepagesFromWine(c.getInt(c.getColumnIndex(Tables.TableWine.key_id))));
+
+        return v;
+    }
     public SerializeList<Vin> getWines(){
         SQLiteDatabase db = this.getReadableDatabase();
         String table = Tables.TableWine.TABLE_WINE;
@@ -385,7 +520,39 @@ public class dbHelper extends SQLiteOpenHelper {
             v.setQte(c.getInt(c.getColumnIndex(Tables.TableWine.quantity)));
             v.setPrix(c.getDouble(c.getColumnIndex(Tables.TableWine.price)));
 
-            Provider p = getProvider(c.getInt(c.getColumnIndex(Tables.TableWine.idProvider)));
+            Provider p = getProvider(c.getInt(c.getColumnIndex(idProvider)));
+            v.setProvider(p);
+
+            v.setCepage(getCepagesFromWine(c.getInt(c.getColumnIndex(Tables.TableWine.key_id))));
+
+            res.add(v);
+        }
+        return res;
+    }
+    public SerializeList<Vin> getAllWines(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String table = Tables.TableWine.TABLE_WINE;
+        List<Couleur> colors = HomeActivity.colors;
+
+        String MY_QUERY = "SELECT * FROM "+table+" ORDER BY "+ Tables.TableWine.name;
+        Cursor c = db.rawQuery(MY_QUERY, null);
+        SerializeList<Vin> res = new SerializeList<Vin>();
+        while (c.moveToNext()){
+            Vin v = new Vin();
+            v.set_id(c.getInt(c.getColumnIndex(Tables.TableWine.key_id)));
+            //v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
+            v.setName(c.getString(c.getColumnIndex(Tables.TableWine.name)));
+            v.setAnnee(c.getInt(c.getColumnIndex(Tables.TableWine.years)));
+            v.setDescription(c.getString(c.getColumnIndex(Tables.TableWine.description)));
+            v.setCouleur(colors.get(c.getInt(c.getColumnIndex(Tables.TableWine.color))));
+
+            Region r = getRegion(c.getInt(c.getColumnIndex(Tables.TableWine.idRegion)));
+            v.setRegion(r);
+
+            v.setQte(c.getInt(c.getColumnIndex(Tables.TableWine.quantity)));
+            v.setPrix(c.getDouble(c.getColumnIndex(Tables.TableWine.price)));
+
+            Provider p = getProvider(c.getInt(c.getColumnIndex(idProvider)));
             v.setProvider(p);
 
             v.setCepage(getCepagesFromWine(c.getInt(c.getColumnIndex(Tables.TableWine.key_id))));

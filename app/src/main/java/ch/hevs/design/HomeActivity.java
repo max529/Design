@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.hevs.design.components.SerializeList;
+import ch.hevs.design.data.Command;
 import ch.hevs.design.data.Couleur;
 import ch.hevs.design.data.DB.dbHelper;
 import ch.hevs.design.data.Vin;
@@ -22,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     public static List<Couleur> colors = new ArrayList<Couleur>();
     public BottomNavBar bottomNavBar = null;
     public SerializeList<Vin> vins = new SerializeList<Vin>();
+    public List<Command> commands = new ArrayList<Command>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +35,8 @@ public class HomeActivity extends AppCompatActivity {
         colors.add(new Couleur(getString(R.string.white)));
         colors.add(new Couleur(getString(R.string.pink)));
 
-        if (savedInstanceState == null) {
-            vins = db.getWines();
-        }else{
-            vins = (SerializeList<Vin>)savedInstanceState.getSerializable("listVins");
-        }
+        vins = db.getWines();
+        commands = db.getCommands();
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomNavBar = new BottomNavBar(bottomBar);
@@ -48,12 +47,14 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
+        Log.e("debug","save");
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putSerializable("listVins",vins);
     }
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         // Always call the superclass so it can restore the view hierarchy
+        Log.e("debug","restore");
         super.onRestoreInstanceState(savedInstanceState);
         vins = (SerializeList<Vin>)savedInstanceState.getSerializable("listVins");
     }
@@ -73,6 +74,8 @@ public class HomeActivity extends AppCompatActivity {
                 this.startActivityForResult(intent,1);
                 break;
             case R.id.navBtnOrderWine:
+                Intent intent1 = new Intent(this, AddOrderActivity.class);
+                this.startActivityForResult(intent1,2);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -87,6 +90,9 @@ public class HomeActivity extends AppCompatActivity {
             if(requestCode==1){
                 vins = db.getWines();
                 bottomNavBar.updateFragment(0);
+            }else if(requestCode==2){
+                commands = db.getCommands();
+                bottomNavBar.updateFragment(1);
             }
         }
     }

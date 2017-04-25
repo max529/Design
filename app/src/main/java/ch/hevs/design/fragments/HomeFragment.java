@@ -51,8 +51,11 @@ public class HomeFragment extends Fragment implements DefaultFragment {
                 activity.startActivity(intent);
             }
         });
-
-        List<Vin> vins = activity.vins;
+        List<Vin> vins;
+        if(activity==null){
+            activity = (HomeActivity) getActivity();
+        }
+        vins = activity.vins;
 
 
         WineAdapter adapter = new WineAdapter(rootView.getContext(), vins);

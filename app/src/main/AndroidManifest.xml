@@ -30,7 +30,10 @@
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".AddProviderActivity"
-            android:parentActivityName=".AddWineActivity" ></activity>
+            android:parentActivityName=".AddWineActivity" />
+        <activity
+            android:name=".AddOrderActivity"
+            android:parentActivityName=".HomeActivity"></activity>
     </application>
 
 </manifest>

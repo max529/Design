@@ -29,7 +29,9 @@ public class CollectionPageAdapter extends FragmentStatePagerAdapter {
             h.setActivity(activity);
             fragment = h;
         }else if(i==1){
-            fragment = new OrderFragment();
+            OrderFragment o = new OrderFragment();
+            o.setActivity(activity);
+            fragment = o;
         }else if(i==2){
             fragment = new MovementFragment();
         }else if(i==3){
