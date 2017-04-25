@@ -1,16 +1,23 @@
 package ch.hevs.design;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +93,17 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
 
         }
 
+        Button addImg = (Button)findViewById(R.id.addWineImg);
+        addImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 4);
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,15 +140,34 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
     // retour des activités enfants
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==RESULT_OK){
-            Object a = data.getSerializableExtra("res");
+            //Object a = data.getSerializableExtra("res");
             if(requestCode==1){
                 updateListRegion();
             }else if(requestCode == 2){
                 updateListCepage();
             }else if(requestCode == 3){
                 updateListFournisseur();
+            }else if(requestCode == 4){
+                setImgWine(data);
             }
         }
+    }
+
+    private void setImgWine(Intent data){
+        Uri selectedImage = data.getData();
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
+            ImageView my_img_view = (ImageView ) findViewById (R.id.addShowWineImg);
+            my_img_view.setImageBitmap(bitmap);
+            Log.e("debug",bitmap.getHeight()+"");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        /*File f =new File(data.getData()).getAbsolutePath();
+        Log.e("debug",f.exists()+"");*/
+
     }
 
     private void validateWine(){

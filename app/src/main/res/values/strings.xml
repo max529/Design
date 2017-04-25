@@ -35,4 +35,5 @@
     <string name="validate_order">Validate Order</string>
     <string name="received">Received</string>
     <string name="cancel">Cancel</string>
+    <string name="number_out">number to take out</string>
 </resources>

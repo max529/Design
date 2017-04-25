@@ -15,6 +15,7 @@ import ch.hevs.design.components.SerializeList;
 import ch.hevs.design.data.Cepage;
 import ch.hevs.design.data.Command;
 import ch.hevs.design.data.Couleur;
+import ch.hevs.design.data.Mouvement;
 import ch.hevs.design.data.Pays;
 import ch.hevs.design.data.Provider;
 import ch.hevs.design.data.Region;
@@ -342,18 +343,42 @@ public class dbHelper extends SQLiteOpenHelper {
 
     //-- Insert -- / -- Delete -- / -- Update -- / -- MOVEMENT --
 
-    public void insertMovement(String idWine, String date, String status, String quantity , String wording){
+    public void insertMovement(int vinId,int isIn,int qte){
         SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT INTO "+ Tables.TableMovemement.TABLE_MOVEMENT+" ("+Tables.TableMovemement.key_vin+","+ Tables.TableMovemement.key_in+","+ Tables.TableMovemement.quantity+") VALUES ('"+vinId+"',"+isIn+","+qte+")";
+        db.execSQL(sql);
+    }
+    public List<Mouvement> getMovements(){
+        SQLiteDatabase db = this.getReadableDatabase();
 
-        ContentValues values = new ContentValues();
+        String table = Tables.TableMovemement.TABLE_MOVEMENT;
+        String[] columns = {
+                Tables.TableMovemement.key_id,
+                Tables.TableMovemement.key_vin,
+                Tables.TableMovemement.key_in,
+                Tables.TableMovemement.quantity
+        };
+        String selection = null;
+        String[] selectionArgs = null;
+        String groupBy = null;
+        String having = null;
+        String orderBy = Tables.TableMovemement.key_id;
+        String limit = null;
 
-        values.put(Tables.TableMovemement.key_vin, idWine);
-        values.put(Tables.TableMovemement.dateMovement, date);
-        values.put(Tables.TableMovemement.key_boolean, status);
-        values.put(Tables.TableMovemement.quantity, quantity);
-        values.put(Tables.TableMovemement.wording, wording);
-
-        db.insert(Tables.TableMovemement.CREATE_TABLE_MOVEMENT,null, values);
+        Cursor cursor = db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
+        List<Mouvement> res = new ArrayList<Mouvement>();
+        while(cursor.moveToNext()){
+            Mouvement m = new Mouvement();
+            m.set_id(cursor.getInt(0));
+            m.setVin(getWine(cursor.getInt(1)));
+            m.setIn(true);
+            if(cursor.getInt(2)!=1){
+                m.setIn(false);
+            }
+            m.setQte(cursor.getInt(3));
+            res.add(m);
+        }
+        return res;
     }
 
 
@@ -473,7 +498,7 @@ public class dbHelper extends SQLiteOpenHelper {
         String table = Tables.TableWine.TABLE_WINE;
         List<Couleur> colors = HomeActivity.colors;
 
-        String MY_QUERY = "SELECT * FROM "+table+" WHERE "+ Tables.TableWine.quantity +"> 0 AND "+ Tables.TableWine.key_id+"="+_id+" ORDER BY "+ Tables.TableWine.name;
+        String MY_QUERY = "SELECT * FROM "+table+" WHERE "+ Tables.TableWine.key_id+"="+_id+" ORDER BY "+ Tables.TableWine.name;
         Cursor c = db.rawQuery(MY_QUERY, null);
         c.moveToFirst();
         Vin v = new Vin();
@@ -560,6 +585,11 @@ public class dbHelper extends SQLiteOpenHelper {
             res.add(v);
         }
         return res;
+    }
+    public void getOutWine(int qte,int idWine){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "UPDATE "+ Tables.TableWine.TABLE_WINE+" SET "+Tables.TableWine.quantity+"="+Tables.TableWine.quantity+"-"+qte+" WHERE "+ Tables.TableWine.key_id+"="+idWine;
+        db.execSQL(sql);
     }
 
 

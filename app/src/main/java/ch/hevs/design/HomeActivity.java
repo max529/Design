@@ -16,6 +16,7 @@ import ch.hevs.design.components.SerializeList;
 import ch.hevs.design.data.Command;
 import ch.hevs.design.data.Couleur;
 import ch.hevs.design.data.DB.dbHelper;
+import ch.hevs.design.data.Mouvement;
 import ch.hevs.design.data.Vin;
 
 public class HomeActivity extends AppCompatActivity {
@@ -24,6 +25,7 @@ public class HomeActivity extends AppCompatActivity {
     public BottomNavBar bottomNavBar = null;
     public SerializeList<Vin> vins = new SerializeList<Vin>();
     public List<Command> commands = new ArrayList<Command>();
+    public List<Mouvement> mvts = new ArrayList<Mouvement>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
 
         vins = db.getWines();
         commands = db.getCommands();
+        mvts = db.getMovements();
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomNavBar = new BottomNavBar(bottomBar);

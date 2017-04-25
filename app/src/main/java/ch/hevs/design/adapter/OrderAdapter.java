@@ -52,8 +52,10 @@ public class OrderAdapter extends ArrayAdapter<Command> {
             @Override
             public void onClick(View v) {
                 db.receivedCommand(command.get_id());
+                db.insertMovement(command.getVin().get_id(),1,command.getQte());
                 of.getHomeActivity().commands = db.getCommands();
                 of.getHomeActivity().vins = db.getWines();
+                of.getHomeActivity().mvts = db.getMovements();
                 of.updateList();
                 of.getHomeActivity().bottomNavBar.updateFragment(0);
                 //Toast.makeText(getContext(),"Command received",Toast.LENGTH_SHORT);

@@ -93,19 +93,16 @@ public final class Tables {
         //Movement Column names
         public static final String key_id = "idMovement";
         public static final String key_vin = "idWine";
-        public static final String dateMovement = "date";
-        public static final String key_boolean = "isIn";
+        public static final String key_in = "isIn";
         public static final String quantity = "quantity";
-        public static final String wording = "wording";
 
         //Database creation sql statement product
         public static final String CREATE_TABLE_MOVEMENT = "CREATE TABLE "
                 + TABLE_MOVEMENT + "(" + key_id +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + key_vin + " INTEGER, "
-                + dateMovement + " DATE, "
-                + key_boolean + " BOOLEAN, "
-                + quantity + " INTEGER, "
-                + wording + " TEXT NOT NULL" +" );";
+                + key_in + " BOOLEAN, "
+                + quantity + " INTEGER"
+                +" );";
     }
 
 

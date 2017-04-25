@@ -158,7 +158,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/buttonOutWine"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -166,12 +166,7 @@
                 android:elevation="0dp"
                 android:text="Sortir" />
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Commander" />
+
 
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
