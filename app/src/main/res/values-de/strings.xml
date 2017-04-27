@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Design</string>
+    <string name="add_cepage">Hinzufügen Rebsorte</string>
+    <string name="add_order">Hinzufügen Befehl</string>
+    <string name="add_place">Hinzufügen Platz</string>
+    <string name="add_provider">Hinzufügen Lieferanten</string>
+    <string name="add_wine">Hinzufügen Wein</string>
+    <string name="title_activity_add_wine">Hinzufügen Wein</string>
+    <string name="cepage_choice">Rebsorte</string>
+    <string name="cancel">Absagen</string>
+    <string name="compos_de">Besteht aus</string>
+    <string name="description">Beschreibung</string>
+    <string name="edit_wine">Bearbeiten Wein</string>
+    <string name="name">Namen</string>
+    <string name="navCommande">Befehl</string>
+    <string name="navMouvement">Bewegung</string>
+    <string name="navParam">Parameter</string>
+    <string name="navVin">Wein</string>
+    <string name="number_out">entfernen</string>
+    <string name="order_wine">Wein befehlen</string>
+    <string name="originaire_de">Stammt von</string>
+    <string name="pink">Rose</string>
+    <string name="price">Preise</string>
+    <string name="provider_address">Anschrift des Lieferanten</string>
+    <string name="provider_email">E-Mail des Lieferanten</string>
+    <string name="provider_name">Namen des Lieferanten</string>
+    <string name="provider_surname">Vorname des Lieferanten</string>
+    <string name="quantity">Menge</string>
+    <string name="received">Empfang</string>
+    <string name="red">Roten</string>
+    <string name="stock_restant_pce">Restliches Bestand</string>
+    <string name="validate_cepage">Validierung Rebsorte</string>
+    <string name="validate_order">Validierung Befehl</string>
+    <string name="validate_place">Validierung Platz</string>
+    <string name="validate_provider">Validierung Lieferanten</string>
+    <string name="validate_wine">Validierung Wein</string>
+    <string name="white">Weiss</string>
+    <string name="year">Jahr</string>
+    <string name="error_cepage_name">Bitte fügen Sie einer Rebsorte</string>
+    <string name="error_place_name">\"Bitte fügen  Sie einen Platz \"</string>
+    <string name="error_provider_address">Bitte fügen Sie eine Adresse</string>
+    <string name="error_provider_email">Bitte fügen Sie eine e-mail</string>
+    <string name="error_provider_name">Bitte fügen Sie ein Lieferantenname</string>
+    <string name="error_provider_surname">Bitte fügen Sie ein Lieferantenvorname</string>
+    <string name="error_quantity">Bitte fügen Sie einem Gehalt</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Design</string>
+    <string name="add_cepage">Ajout Cépage</string>
+    <string name="add_order">Ajout Commande</string>
+    <string name="add_place">Ajout Place</string>
+    <string name="add_provider">Ajout Fournisseur</string>
+    <string name="add_wine">Ajout Vins</string>
+    <string name="cancel">Annuler</string>
+    <string name="cepage_choice">Choix du cépage</string>
+    <string name="compos_de">Composé de</string>
+    <string name="description">Description</string>
+    <string name="edit_wine">Editer du vin</string>
+    <string name="name">Nom</string>
+    <string name="navCommande">Commander</string>
+    <string name="navMouvement">Mouvement</string>
+    <string name="navParam">Paramètres</string>
+    <string name="navVin">Vin</string>
+    <string name="number_out">Retirer</string>
+    <string name="order_wine">Commander du vins</string>
+    <string name="originaire_de">Originaire de</string>
+    <string name="pink">Rose</string>
+    <string name="price">Prix</string>
+    <string name="provider_address">Adresse du fournisseur</string>
+    <string name="provider_email">E-mail du fournisseur</string>
+    <string name="provider_name">Nom du fournisseur</string>
+    <string name="provider_surname">Prénom du fournisseur</string>
+    <string name="quantity">Quantité</string>
+    <string name="received">Réception</string>
+    <string name="stock_restant_pce">Quantité restante</string>
+    <string name="title_activity_add_wine">AjoutVin</string>
+    <string name="validate_cepage">Validation Cépage</string>
+    <string name="validate_order">Validation Commande</string>
+    <string name="validate_place">Validation de la place</string>
+    <string name="validate_provider">Validation du fournisseur</string>
+    <string name="validate_wine">Validation du Vin</string>
+    <string name="year">Année</string>
+    <string name="white">Blanc</string>
+    <string name="red">Rouge</string>
+    <string name="error_cepage_name">Veuillez ajouter un nom de cépage</string>
+    <string name="error_place_name">Veuillez ajouter un nom de place</string>
+    <string name="error_provider_address">Veuillez ajouter l\'adresse du fournisseur</string>
+    <string name="error_provider_email">Veuillez ajouter l\'e-mail du fournisseur</string>
+    <string name="error_provider_name">Veuillez ajouter le nom du fournisseur</string>
+    <string name="error_provider_surname">Veuillez ajouter le prénom du fournisseur</string>
+    <string name="error_quantity">Veuillez ajouter une quantié</string>
+</resources>
