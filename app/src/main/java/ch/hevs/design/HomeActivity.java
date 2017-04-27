@@ -40,6 +40,9 @@ public class HomeActivity extends AppCompatActivity {
         vins = db.getWines();
         commands = db.getCommands();
         mvts = db.getMovements();
+        for(Object w : vins){
+            Log.e("debugImg",((Vin)w).toStringInfo());
+        }
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomNavBar = new BottomNavBar(bottomBar);

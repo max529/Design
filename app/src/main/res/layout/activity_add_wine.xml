@@ -9,8 +9,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/addShowWineImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@color/bb_darkBackgroundColor" />
+
+        <Button
+            android:id="@+id/addWineImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:text="add wine"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addShowWineImg"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
         <EditText
             android:id="@+id/addNameWine"
+            style="@style/AppInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addWineImg"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/addDescrWine"
             style="@style/AppInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -18,29 +62,12 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:hint="@string/name"
-            android:inputType="textPersonName"
-            android:text="test"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/addDescrWine"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:inputType="textMultiLine"
             android:hint="@string/description"
+            android:inputType="textMultiLine"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addNameWine"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+            app:layout_constraintTop_toBottomOf="@+id/addNameWine" />
 
         <EditText
             android:id="@+id/addYearWine"
@@ -54,7 +81,6 @@
             android:layout_marginTop="8dp"
             android:hint="@string/year"
             android:inputType="number"
-            android:text="2008"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addDescrWine" />
@@ -102,7 +128,6 @@
             android:ems="10"
             android:hint="@string/quantity"
             android:inputType="number"
-            android:text="10"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addRegionWine" />
@@ -120,7 +145,6 @@
             android:ems="10"
             android:hint="@string/price"
             android:inputType="numberDecimal"
-            android:text="15"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addQuantityWine" />
@@ -156,24 +180,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addCepageWine" />
 
-        <ImageView
-            android:id="@+id/addShowWineImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@color/bb_darkBackgroundColor"
-            app:layout_constraintTop_toBottomOf="@+id/addFournisseurWine"/>
 
-        <Button
-            android:id="@+id/addWineImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:text="add wine"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addShowWineImg" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

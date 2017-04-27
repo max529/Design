@@ -2,6 +2,7 @@ package ch.hevs.design;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,7 +19,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +53,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
 
     private Menu menu;
     private Vin vinToEdit = null;
+    private String imgWinePath = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +99,19 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
 
             Spinner sFournisseurWine = ((Spinner)findViewById(R.id.addFournisseurWine));
             sFournisseurWine.setSelection(adapterFournisseur.getPosition(v.getProvider()));
+
+            imgWinePath = v.getImg();
+            Bitmap bitmap=null;
+            File f= new File(imgWinePath);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            try {
+                bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            ImageView my_img_view = (ImageView ) findViewById (R.id.addShowWineImg);
+            my_img_view.setImageBitmap(bitmap);
 
         }
 
@@ -158,6 +179,15 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
         Uri selectedImage = data.getData();
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
+            SecureRandom random = new SecureRandom();
+            String uniquePath = new BigInteger(130, random).toString(32)+".png";
+            String newPath = getFilesDir().getPath()+"/"+uniquePath;
+
+            FileOutputStream out = new FileOutputStream(newPath);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.close();
+            Log.e("debug",newPath);
+            imgWinePath = newPath;
             ImageView my_img_view = (ImageView ) findViewById (R.id.addShowWineImg);
             my_img_view.setImageBitmap(bitmap);
         } catch (IOException e) {
@@ -171,23 +201,24 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
     }
 
     private void validateWine(){
+        Log.e("createDB",imgWinePath);
         if(vinToEdit == null) {
             String name = ((EditText) findViewById(R.id.addNameWine)).getText().toString();
             if(name.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine name",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine name",Toast.LENGTH_SHORT).show();
                 return;
             }
 
 
             String description = ((EditText) findViewById(R.id.addDescrWine)).getText().toString();
             if(description.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine description",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine description",Toast.LENGTH_SHORT).show();
                 return;
             }
 
             String tempYear = ((EditText) findViewById(R.id.addYearWine)).getText().toString();
             if(tempYear.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine year",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine year",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -199,7 +230,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
 
             String tempQte = ((EditText) findViewById(R.id.addQuantityWine)).getText().toString();
             if(tempQte.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine quantity",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine quantity",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -207,7 +238,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
 
             String tempPrice = ((EditText) findViewById(R.id.addPriceWine)).getText().toString();
             if(tempPrice.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine price",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine price",Toast.LENGTH_SHORT).show();
                 return;
             }
             double price = parseDouble(tempPrice);
@@ -215,7 +246,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
             MultiSpinner cepage = (MultiSpinner) findViewById(R.id.addCepageWine);
             List<Object> cepObj = cepage.getSelectedItems();
             if(cepObj.size()==0){
-                Toast.makeText(AddWineActivity.this,"Please select at least one cepage",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please select at least one cepage",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -228,25 +259,25 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
             Provider provider = (Provider) spinnerFournisseur.getSelectedItem();
 
             int colorID = colors.indexOf(color);
-            db.insertWine(name,description,year,colorID,region.get_id(),price,qte,provider.get_id(),ceps);
+            db.insertWine(imgWinePath,name,description,year,colorID,region.get_id(),price,qte,provider.get_id(),ceps);
 
         }else{
             String name = ((EditText) findViewById(R.id.addNameWine)).getText().toString();
             if(name.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine name",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine name",Toast.LENGTH_SHORT).show();
                 return;
             }
 
 
             String description = ((EditText) findViewById(R.id.addDescrWine)).getText().toString();
             if(description.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine description",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine description",Toast.LENGTH_SHORT).show();
                 return;
             }
 
             String tempYear = ((EditText) findViewById(R.id.addYearWine)).getText().toString();
             if(tempYear.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine year",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine year",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -258,7 +289,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
 
             String tempQte = ((EditText) findViewById(R.id.addQuantityWine)).getText().toString();
             if(tempQte.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine quantity",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine quantity",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -266,7 +297,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
 
             String tempPrice = ((EditText) findViewById(R.id.addPriceWine)).getText().toString();
             if(tempPrice.length()==0){
-                Toast.makeText(AddWineActivity.this,"Please add a wine price",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please add a wine price",Toast.LENGTH_SHORT).show();
                 return;
             }
             double price = parseDouble(tempPrice);
@@ -274,7 +305,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
             MultiSpinner cepage = (MultiSpinner) findViewById(R.id.addCepageWine);
             List<Object> cepObj = cepage.getSelectedItems();
             if(cepObj.size()==0){
-                Toast.makeText(AddWineActivity.this,"Please select at least one cepage",Toast.LENGTH_SHORT);
+                Toast.makeText(AddWineActivity.this,"Please select at least one cepage",Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -287,7 +318,7 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
             Provider provider = (Provider) spinnerFournisseur.getSelectedItem();
 
             int colorID = colors.indexOf(color);
-            db.updateWine(vinToEdit.get_id(),name,description,year,colorID,region.get_id(),price,qte,provider.get_id(),ceps);
+            db.updateWine(vinToEdit.get_id(),imgWinePath,name,description,year,colorID,region.get_id(),price,qte,provider.get_id(),ceps);
         }
         Intent i = new Intent();
         setResult(RESULT_OK,i);

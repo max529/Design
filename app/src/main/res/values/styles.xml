@@ -12,10 +12,12 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
     <style name="AppSpinner" parent="@style/Widget.AppCompat.Spinner.Underlined">
-
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
     <style name="AppInput" parent="@style/Widget.AppCompat.EditText">
-
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

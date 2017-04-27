@@ -362,7 +362,7 @@ public class dbHelper extends SQLiteOpenHelper {
         String[] selectionArgs = null;
         String groupBy = null;
         String having = null;
-        String orderBy = Tables.TableMovemement.key_id;
+        String orderBy = Tables.TableMovemement.key_id+" DESC";
         String limit = null;
 
         Cursor cursor = db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
@@ -452,9 +452,11 @@ public class dbHelper extends SQLiteOpenHelper {
 
     //-- Insert -- / -- Delete -- / -- Update -- / -- WINE --
 
-    public void insertWine(String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages ){
+    public void insertWine(String imgPath,String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages ){
         SQLiteDatabase db = this.getWritableDatabase();
+        Log.e("insertDB",imgPath+" s");
         String sql = "INSERT INTO "+ Tables.TableWine.TABLE_WINE+" ("+
+                    Tables.TableWine.imgPath+","+
                     Tables.TableWine.name+","+
                     Tables.TableWine.description+","+
                     Tables.TableWine.years+","+
@@ -464,6 +466,7 @@ public class dbHelper extends SQLiteOpenHelper {
                     Tables.TableWine.price+","+
                     Tables.TableWine.idProvider+
                 ") VALUES ('"+
+                    imgPath+"','"+
                     name+"','"+
                     description+"','"+
                     years+"','"+
@@ -492,9 +495,10 @@ public class dbHelper extends SQLiteOpenHelper {
         }
 
     }
-    public void updateWine(int _id,String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages){
+    public void updateWine(int _id,String imgpath,String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages){
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "UPDATE "+ Tables.TableWine.TABLE_WINE+" SET "+
+                Tables.TableWine.imgPath+"='"+imgpath+"',"+
                 Tables.TableWine.name+"='"+name+"',"+
                 Tables.TableWine.description+"='"+description+"',"+
                 Tables.TableWine.years+"="+years+","+
@@ -532,7 +536,7 @@ public class dbHelper extends SQLiteOpenHelper {
         c.moveToFirst();
         Vin v = new Vin();
         v.set_id(c.getInt(c.getColumnIndex(Tables.TableWine.key_id)));
-        //v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
+        v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
         v.setName(c.getString(c.getColumnIndex(Tables.TableWine.name)));
         v.setAnnee(c.getInt(c.getColumnIndex(Tables.TableWine.years)));
         v.setDescription(c.getString(c.getColumnIndex(Tables.TableWine.description)));
@@ -549,6 +553,8 @@ public class dbHelper extends SQLiteOpenHelper {
 
         v.setCepage(getCepagesFromWine(c.getInt(c.getColumnIndex(Tables.TableWine.key_id))));
 
+
+
         return v;
     }
     public SerializeList<Vin> getWines(){
@@ -562,7 +568,7 @@ public class dbHelper extends SQLiteOpenHelper {
         while (c.moveToNext()){
             Vin v = new Vin();
             v.set_id(c.getInt(c.getColumnIndex(Tables.TableWine.key_id)));
-            //v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
+            v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
             v.setName(c.getString(c.getColumnIndex(Tables.TableWine.name)));
             v.setAnnee(c.getInt(c.getColumnIndex(Tables.TableWine.years)));
             v.setDescription(c.getString(c.getColumnIndex(Tables.TableWine.description)));

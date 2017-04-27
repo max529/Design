@@ -119,4 +119,21 @@ public class Vin implements Serializable{
     public String toString() {
         return this.name+" ("+this.provider.toString()+")";
     }
+
+
+    public String toStringInfo() {
+        return "Vin{" +
+                "_id=" + _id +
+                ", img='" + img + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", annee=" + annee +
+                ", couleur=" + couleur +
+                ", region=" + region +
+                ", qte=" + qte +
+                ", prix=" + prix +
+                ", cepage=" + cepage +
+                ", provider=" + provider +
+                '}';
+    }
 }
