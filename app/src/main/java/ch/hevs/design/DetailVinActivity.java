@@ -53,10 +53,17 @@ public class DetailVinActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
 
                 dialog.show();
             }
         });
+
 
     }
 
@@ -84,13 +91,21 @@ public class DetailVinActivity extends AppCompatActivity {
             case R.id.navBtnEditWine:
                 intent = new Intent(this, AddWineActivity.class);
                 intent.putExtra("Vin",v);
-                this.startActivity(intent);
+                this.startActivityForResult(intent,1);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
         return true;
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==RESULT_OK){
+            if(requestCode==1){
+                v = db.getWine(v.get_id());
+                updateInfo();
+            }
+        }
     }
 
     public void updateInfo(){

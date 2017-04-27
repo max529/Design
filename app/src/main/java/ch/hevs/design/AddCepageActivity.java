@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import ch.hevs.design.data.Cepage;
 
@@ -39,6 +40,10 @@ public class AddCepageActivity extends AppCompatActivity {
 
     private void valideCepage(){
         String name = ((EditText)findViewById(R.id.addNameCepage)).getText().toString();
+        if(name.length()==0){
+            Toast.makeText(AddCepageActivity.this, R.string.error_cepage_name,Toast.LENGTH_SHORT).show();
+            return;
+        }
         db.insertCepage(name);
         Intent i = new Intent();
         i.putExtra("res",new Cepage(name));

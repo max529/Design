@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import static ch.hevs.design.HomeActivity.db;
 
@@ -40,6 +41,20 @@ public class AddProviderActivity extends AppCompatActivity {
         String surname = ((EditText)findViewById(R.id.addSurnameProvider)).getText().toString();
         String address = ((EditText)findViewById(R.id.addAdressProvider)).getText().toString();
         String email = ((EditText)findViewById(R.id.addEmailProvider)).getText().toString();
+
+        if(name.length()==0){
+            Toast.makeText(AddProviderActivity.this, R.string.error_provider_name,Toast.LENGTH_SHORT).show();
+            return;
+        }else if(surname.length()==0){
+            Toast.makeText(AddProviderActivity.this, R.string.error_provider_surname,Toast.LENGTH_SHORT).show();
+            return;
+        }else if(address.length()==0){
+            Toast.makeText(AddProviderActivity.this, R.string.error_provider_address,Toast.LENGTH_SHORT).show();
+            return;
+        }else if(email.length()==0){
+            Toast.makeText(AddProviderActivity.this, R.string.error_provider_email,Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         db.insertProvider(name,surname,address,email);
 

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import ch.hevs.design.components.SerializeList;
 import ch.hevs.design.data.Vin;
@@ -49,9 +50,15 @@ public class AddOrderActivity extends AppCompatActivity {
 
     private void valideOrder() {
         String temp = ((EditText)findViewById(R.id.addOrderQte)).getText().toString();
+        if(temp.length()==0){
+            Toast.makeText(AddOrderActivity.this, R.string.error_quantity,Toast.LENGTH_SHORT).show();
+            return;
+        }
         int qte = Integer.parseInt(temp);
         Spinner spinnerWine = (Spinner)findViewById(R.id.addOrderListWine);
         Vin v = (Vin)spinnerWine.getSelectedItem();
+
+
 
         db.insertCommand(v.get_id(),qte,0);
 

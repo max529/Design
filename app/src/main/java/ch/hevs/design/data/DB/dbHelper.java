@@ -474,7 +474,6 @@ public class dbHelper extends SQLiteOpenHelper {
                     idProvider+
                 "')";
         db.execSQL(sql);
-        Log.e("Deb",sql);
 
         sql = "SELECT MAX("+ Tables.TableWine.key_id+") id FROM "+ Tables.TableWine.TABLE_WINE;
         Cursor c = db.rawQuery(sql, null);
@@ -492,6 +491,36 @@ public class dbHelper extends SQLiteOpenHelper {
             db.execSQL(sql);
         }
 
+    }
+    public void updateWine(int _id,String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "UPDATE "+ Tables.TableWine.TABLE_WINE+" SET "+
+                Tables.TableWine.name+"='"+name+"',"+
+                Tables.TableWine.description+"='"+description+"',"+
+                Tables.TableWine.years+"="+years+","+
+                Tables.TableWine.color+"="+idColor+","+
+                Tables.TableWine.idRegion+"="+idRegion+","+
+                Tables.TableWine.quantity+"="+quantity+","+
+                Tables.TableWine.price+"="+price+","+
+                Tables.TableWine.idProvider+"="+idProvider+" "+
+                "WHERE "+
+                Tables.TableWine.key_id+"="+_id;
+        db.execSQL(sql);
+        Log.e("Deb",sql);
+
+        sql = "DELETE FROM "+ Tables.TableWineCepage.TABLE_NAME+" WHERE "+ Tables.TableWineCepage.idWine+"="+_id;
+        db.execSQL(sql);
+
+        for(Cepage cep : cepages) {
+            sql = "INSERT INTO " + Tables.TableWineCepage.TABLE_NAME + " (" +
+                    Tables.TableWineCepage.idWine + "," +
+                    Tables.TableWineCepage.idCepage +
+                    ") VALUES ('" +
+                    _id + "','" +
+                    cep.get_id() +
+                    "')";
+            db.execSQL(sql);
+        }
     }
     public Vin getWine(int _id){
         SQLiteDatabase db = this.getReadableDatabase();

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,11 @@ public class AddPlaceActivity extends AppCompatActivity {
         Spinner spinnerPays = (Spinner)findViewById(R.id.addCountryPlace);
         Pays p = (Pays)spinnerPays.getSelectedItem();
 
-        Log.e("ImplementDB","Implementation de l'ajout de region");
+        if(name.length()==0){
+            Toast.makeText(AddPlaceActivity.this, R.string.error_place_name,Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         db.insertRegion(p.get_id(),name);
 
         Intent i = new Intent();

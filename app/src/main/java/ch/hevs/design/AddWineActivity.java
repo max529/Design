@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -170,19 +171,54 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
     }
 
     private void validateWine(){
-        Vin v = null;
         if(vinToEdit == null) {
             String name = ((EditText) findViewById(R.id.addNameWine)).getText().toString();
+            if(name.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine name",Toast.LENGTH_SHORT);
+                return;
+            }
+
+
             String description = ((EditText) findViewById(R.id.addDescrWine)).getText().toString();
-            int year = parseInt(((EditText) findViewById(R.id.addYearWine)).getText().toString());
+            if(description.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine description",Toast.LENGTH_SHORT);
+                return;
+            }
+
+            String tempYear = ((EditText) findViewById(R.id.addYearWine)).getText().toString();
+            if(tempYear.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine year",Toast.LENGTH_SHORT);
+                return;
+            }
+
+            int year = parseInt(tempYear);
             Spinner spinnerColor = (Spinner) findViewById(R.id.addColorWine);
             Couleur color = (Couleur) spinnerColor.getSelectedItem();
             Spinner spinnerRegion = (Spinner) findViewById(R.id.addRegionWine);
             Region region = (Region) spinnerRegion.getSelectedItem();
-            int qte = parseInt(((EditText) findViewById(R.id.addQuantityWine)).getText().toString());
-            double price = parseDouble(((EditText) findViewById(R.id.addPriceWine)).getText().toString());
+
+            String tempQte = ((EditText) findViewById(R.id.addQuantityWine)).getText().toString();
+            if(tempQte.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine quantity",Toast.LENGTH_SHORT);
+                return;
+            }
+
+            int qte = parseInt(tempQte);
+
+            String tempPrice = ((EditText) findViewById(R.id.addPriceWine)).getText().toString();
+            if(tempPrice.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine price",Toast.LENGTH_SHORT);
+                return;
+            }
+            double price = parseDouble(tempPrice);
+
             MultiSpinner cepage = (MultiSpinner) findViewById(R.id.addCepageWine);
             List<Object> cepObj = cepage.getSelectedItems();
+            if(cepObj.size()==0){
+                Toast.makeText(AddWineActivity.this,"Please select at least one cepage",Toast.LENGTH_SHORT);
+                return;
+            }
+
             List<Cepage> ceps = new ArrayList<Cepage>();
             for (Object o : cepObj) {
                 Cepage cTemp = (Cepage) o;
@@ -195,7 +231,63 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
             db.insertWine(name,description,year,colorID,region.get_id(),price,qte,provider.get_id(),ceps);
 
         }else{
+            String name = ((EditText) findViewById(R.id.addNameWine)).getText().toString();
+            if(name.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine name",Toast.LENGTH_SHORT);
+                return;
+            }
 
+
+            String description = ((EditText) findViewById(R.id.addDescrWine)).getText().toString();
+            if(description.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine description",Toast.LENGTH_SHORT);
+                return;
+            }
+
+            String tempYear = ((EditText) findViewById(R.id.addYearWine)).getText().toString();
+            if(tempYear.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine year",Toast.LENGTH_SHORT);
+                return;
+            }
+
+            int year = parseInt(tempYear);
+            Spinner spinnerColor = (Spinner) findViewById(R.id.addColorWine);
+            Couleur color = (Couleur) spinnerColor.getSelectedItem();
+            Spinner spinnerRegion = (Spinner) findViewById(R.id.addRegionWine);
+            Region region = (Region) spinnerRegion.getSelectedItem();
+
+            String tempQte = ((EditText) findViewById(R.id.addQuantityWine)).getText().toString();
+            if(tempQte.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine quantity",Toast.LENGTH_SHORT);
+                return;
+            }
+
+            int qte = parseInt(tempQte);
+
+            String tempPrice = ((EditText) findViewById(R.id.addPriceWine)).getText().toString();
+            if(tempPrice.length()==0){
+                Toast.makeText(AddWineActivity.this,"Please add a wine price",Toast.LENGTH_SHORT);
+                return;
+            }
+            double price = parseDouble(tempPrice);
+
+            MultiSpinner cepage = (MultiSpinner) findViewById(R.id.addCepageWine);
+            List<Object> cepObj = cepage.getSelectedItems();
+            if(cepObj.size()==0){
+                Toast.makeText(AddWineActivity.this,"Please select at least one cepage",Toast.LENGTH_SHORT);
+                return;
+            }
+
+            List<Cepage> ceps = new ArrayList<Cepage>();
+            for (Object o : cepObj) {
+                Cepage cTemp = (Cepage) o;
+                ceps.add(cTemp);
+            }
+            Spinner spinnerFournisseur = (Spinner) findViewById(R.id.addFournisseurWine);
+            Provider provider = (Provider) spinnerFournisseur.getSelectedItem();
+
+            int colorID = colors.indexOf(color);
+            db.updateWine(vinToEdit.get_id(),name,description,year,colorID,region.get_id(),price,qte,provider.get_id(),ceps);
         }
         Intent i = new Intent();
         setResult(RESULT_OK,i);

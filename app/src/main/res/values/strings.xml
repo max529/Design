@@ -36,4 +36,11 @@
     <string name="received">Received</string>
     <string name="cancel">Cancel</string>
     <string name="number_out">number to take out</string>
+    <string name="error_provider_name">Please add a provider name</string>
+    <string name="error_provider_surname">Please add a provider surname</string>
+    <string name="error_provider_address">Please add a provider address</string>
+    <string name="error_provider_email">Please add a provider email</string>
+    <string name="error_place_name">Please add a place name</string>
+    <string name="error_cepage_name">Please add a ceapge name</string>
+    <string name="error_quantity">Please add quantity</string>
 </resources>
