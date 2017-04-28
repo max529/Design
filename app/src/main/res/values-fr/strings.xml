@@ -8,7 +8,7 @@
     <string name="add_wine">Ajout Vins</string>
     <string name="cancel">Annuler</string>
     <string name="cepage_choice">Choix du cépage</string>
-    <string name="compos_de">Composé de</string>
+    <string name="compos_de">Composé de : %1$s</string>
     <string name="description">Description</string>
     <string name="edit_wine">Editer du vin</string>
     <string name="name">Nom</string>
@@ -18,7 +18,7 @@
     <string name="navVin">Vin</string>
     <string name="number_out">Retirer</string>
     <string name="order_wine">Commander du vins</string>
-    <string name="originaire_de">Originaire de</string>
+    <string name="originaire_de">Originaire de %1$s</string>
     <string name="pink">Rose</string>
     <string name="price">Prix</string>
     <string name="provider_address">Adresse du fournisseur</string>
@@ -27,7 +27,7 @@
     <string name="provider_surname">Prénom du fournisseur</string>
     <string name="quantity">Quantité</string>
     <string name="received">Réception</string>
-    <string name="stock_restant_pce">Quantité restante</string>
+    <string name="stock_restant_pce">Quantité restante : %1$dpce</string>
     <string name="title_activity_add_wine">AjoutVin</string>
     <string name="validate_cepage">Validation Cépage</string>
     <string name="validate_order">Validation Commande</string>
