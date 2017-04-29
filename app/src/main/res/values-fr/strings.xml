@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Design</string>
+    <string name="app_name">WineCave</string>
     <string name="add_cepage">Ajout Cépage</string>
     <string name="add_order">Ajout Commande</string>
     <string name="add_place">Ajout Place</string>
@@ -10,13 +10,13 @@
     <string name="cepage_choice">Choix du cépage</string>
     <string name="compos_de">Composé de : %1$s</string>
     <string name="description">Description</string>
-    <string name="edit_wine">Editer du vin</string>
+    <string name="edit_wine">Editer le vin</string>
     <string name="name">Nom</string>
     <string name="navCommande">Commander</string>
     <string name="navMouvement">Mouvement</string>
     <string name="navParam">Paramètres</string>
     <string name="navVin">Vin</string>
-    <string name="number_out">Retirer</string>
+    <string name="number_out">Nombre à retirer</string>
     <string name="order_wine">Commander du vins</string>
     <string name="originaire_de">Originaire de %1$s</string>
     <string name="pink">Rose</string>
@@ -44,4 +44,9 @@
     <string name="error_provider_name">Veuillez ajouter le nom du fournisseur</string>
     <string name="error_provider_surname">Veuillez ajouter le prénom du fournisseur</string>
     <string name="error_quantity">Veuillez ajouter une quantié</string>
+    <string name="command_received">Commande reçue</string>
+    <string name="command_canceled">Commande annulée</string>
+    <string name="get_out">Sortir</string>
+    <string name="no_order">No order</string>
+    <string name="add_picutre">add picutre</string>
 </resources>

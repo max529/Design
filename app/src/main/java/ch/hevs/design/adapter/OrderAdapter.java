@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -58,7 +59,8 @@ public class OrderAdapter extends ArrayAdapter<Command> {
                 of.getHomeActivity().mvts = db.getMovements();
                 of.updateList();
                 of.getHomeActivity().bottomNavBar.updateFragment(0);
-                //Toast.makeText(getContext(),"Command received",Toast.LENGTH_SHORT);
+                of.getHomeActivity().bottomNavBar.updateFragment(2);
+                Toast.makeText(getContext(), R.string.command_received, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -69,6 +71,7 @@ public class OrderAdapter extends ArrayAdapter<Command> {
                 db.deleteCommand(command.get_id());
                 of.getHomeActivity().commands = db.getCommands();
                 of.updateList();
+                Toast.makeText(getContext(), R.string.command_canceled, Toast.LENGTH_SHORT).show();
             }
         });
 

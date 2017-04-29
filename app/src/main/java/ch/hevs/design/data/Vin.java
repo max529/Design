@@ -68,7 +68,9 @@ public class Vin implements Serializable{
         for(Cepage c : cepage){
             res += c.getNom()+", ";
         }
-        res = res.substring(0,res.length()-2);
+        if(res.length()>1) {
+            res = res.substring(0, res.length() - 2);
+        }
         return res;
     }
     public void setCepage(List<Cepage> cepage){

@@ -22,6 +22,7 @@ import ch.hevs.design.interfaces.DefaultFragment;
 public class OrderFragment extends Fragment implements DefaultFragment {
     private HomeActivity activity;
     private View rootView;
+    private LayoutInflater inflater;
     private ListView mListView;
     public HomeActivity getHomeActivity(){
         return activity;
@@ -37,22 +38,22 @@ public class OrderFragment extends Fragment implements DefaultFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         // The last two arguments ensure LayoutParams are inflated
         // properly.
-        rootView = inflater.inflate(
-                R.layout.fragment_order, container, false);
-
-        mListView = (ListView) rootView.findViewById(R.id.listViewOrder);
-
         List<Command> commands;
         if(activity==null){
             activity = (HomeActivity) getActivity();
         }
         commands = activity.commands;
+        this.inflater = inflater;
 
+
+        rootView = inflater.inflate(R.layout.fragment_order, container, false);
+        mListView = (ListView) rootView.findViewById(R.id.listViewOrder);
         OrderAdapter adapter = new OrderAdapter(rootView.getContext(), commands,OrderFragment.this);
         mListView.setAdapter(adapter);
-
         return rootView;
     }
+
+
 
     @Override
     public void updateList() {

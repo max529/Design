@@ -164,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:elevation="0dp"
-                android:text="Sortir" />
+                android:text="@string/get_out" />
 
 
 

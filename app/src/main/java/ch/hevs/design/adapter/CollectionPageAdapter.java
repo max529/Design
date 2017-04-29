@@ -16,8 +16,10 @@ import ch.hevs.design.fragments.SettingsFragment;
 
 public class CollectionPageAdapter extends FragmentStatePagerAdapter {
     private HomeActivity activity;
+    private FragmentManager fm;
     public CollectionPageAdapter(FragmentManager fm, HomeActivity activity){
         super(fm);
+        this.fm = fm;
         this.activity = activity;
     }
     @Override
@@ -35,11 +37,16 @@ public class CollectionPageAdapter extends FragmentStatePagerAdapter {
         }else if(i==2){
             fragment = new MovementFragment();
         }else if(i==3){
-            fragment = new SettingsFragment();
+            SettingsFragment o = new SettingsFragment();
+            o.setActivity(activity);
+            fragment = o;
         }
 
         return fragment;
 
+    }
+    public FragmentManager getFm(){
+        return fm;
     }
 
     @Override

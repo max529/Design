@@ -21,11 +21,13 @@ import ch.hevs.design.data.Provider;
 import ch.hevs.design.data.Region;
 import ch.hevs.design.data.Vin;
 
+import static ch.hevs.design.data.DB.Tables.TableCommand.qte;
 import static ch.hevs.design.data.DB.Tables.TableCountry.TABLE_COUNTRY;
 import static ch.hevs.design.data.DB.Tables.TableCountry.initial;
 import static ch.hevs.design.data.DB.Tables.TableCountry.nameCountry;
 import static ch.hevs.design.data.DB.Tables.TableRegion.idCountry;
 import static ch.hevs.design.data.DB.Tables.TableWine.idProvider;
+import static ch.hevs.design.data.DB.Tables.TableWine.imgPath;
 
 
 /**
@@ -81,8 +83,13 @@ public class dbHelper extends SQLiteOpenHelper {
 
     public void insertProvider (String name, String surname, String address, String email){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO "+ Tables.TableProvider.TABLE_PROVIDER+" ("+Tables.TableProvider.nameProvider+","+Tables.TableProvider.surnameProvider+","+ Tables.TableProvider.address+","+ Tables.TableProvider.email+") VALUES ('"+name+"','"+surname+"','"+address+"','"+email+"')";
-        db.execSQL(sql);
+        ContentValues values = new ContentValues();
+        values.put(Tables.TableProvider.nameProvider, name);
+        values.put(Tables.TableProvider.surnameProvider, surname);
+        values.put(Tables.TableProvider.address, address);
+        values.put(Tables.TableProvider.email, email);
+        db.insert(Tables.TableProvider.TABLE_PROVIDER, null, values);
+        db.close();
     }
     public Provider getProvider(int _id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -158,8 +165,10 @@ public class dbHelper extends SQLiteOpenHelper {
 
     public void insertCepage(String name){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO "+ Tables.TableCepage.TABLE_CEPAGE+" ("+Tables.TableCepage.nameCepage+") VALUES ('"+name+"')";
-        db.execSQL(sql);
+        ContentValues values = new ContentValues();
+        values.put(Tables.TableCepage.nameCepage, name);
+        db.insert(Tables.TableCepage.TABLE_CEPAGE, null, values);
+        db.close();
     }
     public List<Cepage> getCepagesFromWine(int idWine){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -216,8 +225,12 @@ public class dbHelper extends SQLiteOpenHelper {
 
     public void insertCommand(int idWine, int qte, int state){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO "+ Tables.TableCommand.TABLE_COMMAND+" ("+Tables.TableCommand.idWine+","+ Tables.TableCommand.qte+","+ Tables.TableCommand.state+") VALUES ('"+idWine+"',"+qte+","+state+")";
-        db.execSQL(sql);
+        ContentValues values = new ContentValues();
+        values.put(Tables.TableCommand.idWine, idWine);
+        values.put(Tables.TableCommand.qte, qte);
+        values.put(Tables.TableCommand.state, state);
+        db.insert(Tables.TableCommand.TABLE_COMMAND, null, values);
+        db.close();
     }
     public List<Command> getCommands(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -225,7 +238,7 @@ public class dbHelper extends SQLiteOpenHelper {
         String[] columns = {
                 Tables.TableCommand.key_id,
                 Tables.TableCommand.idWine,
-                Tables.TableCommand.qte,
+                qte,
                 Tables.TableCommand.state
 
         };
@@ -270,7 +283,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 Tables.TableCommand.key_id,
                 Tables.TableCommand.idWine,
                 Tables.TableCommand.state,
-                Tables.TableCommand.qte
+                qte
         };
         String selection = Tables.TableCommand.key_id+"=?";
         String[] selectionArgs = {_id+""};
@@ -345,8 +358,12 @@ public class dbHelper extends SQLiteOpenHelper {
 
     public void insertMovement(int vinId,int isIn,int qte){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO "+ Tables.TableMovemement.TABLE_MOVEMENT+" ("+Tables.TableMovemement.key_vin+","+ Tables.TableMovemement.key_in+","+ Tables.TableMovemement.quantity+") VALUES ('"+vinId+"',"+isIn+","+qte+")";
-        db.execSQL(sql);
+        ContentValues values = new ContentValues();
+        values.put(Tables.TableMovemement.key_vin, vinId);
+        values.put(Tables.TableMovemement.key_in, isIn);
+        values.put(Tables.TableMovemement.quantity, qte);
+        db.insert(Tables.TableMovemement.TABLE_MOVEMENT, null, values);
+        db.close();
     }
     public List<Mouvement> getMovements(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -380,6 +397,11 @@ public class dbHelper extends SQLiteOpenHelper {
         }
         return res;
     }
+    public void clearMovements(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "DELETE FROM "+ Tables.TableMovemement.TABLE_MOVEMENT;
+        db.execSQL(sql);
+    }
 
 
 
@@ -391,8 +413,11 @@ public class dbHelper extends SQLiteOpenHelper {
 
     public void insertRegion(int idCountry, String name){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO "+ Tables.TableRegion.TABLE_REGION+" ("+Tables.TableRegion.region+","+ Tables.TableRegion.idCountry+") VALUES ('"+name+"',"+idCountry+")";
-        db.execSQL(sql);
+        ContentValues values = new ContentValues();
+        values.put(Tables.TableRegion.region, name);
+        values.put(Tables.TableRegion.idCountry, idCountry);
+        db.insert(Tables.TableRegion.TABLE_REGION, null, values);
+        db.close();
     }
     public Region getRegion(int _id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -454,31 +479,21 @@ public class dbHelper extends SQLiteOpenHelper {
 
     public void insertWine(String imgPath,String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages ){
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.e("insertDB",imgPath+" s");
-        String sql = "INSERT INTO "+ Tables.TableWine.TABLE_WINE+" ("+
-                    Tables.TableWine.imgPath+","+
-                    Tables.TableWine.name+","+
-                    Tables.TableWine.description+","+
-                    Tables.TableWine.years+","+
-                    Tables.TableWine.color+","+
-                    Tables.TableWine.idRegion+","+
-                    Tables.TableWine.quantity+","+
-                    Tables.TableWine.price+","+
-                    Tables.TableWine.idProvider+
-                ") VALUES ('"+
-                    imgPath+"','"+
-                    name+"','"+
-                    description+"','"+
-                    years+"','"+
-                    idColor+"','"+
-                    idRegion+"','"+
-                    quantity+"','"+
-                    price+"','"+
-                    idProvider+
-                "')";
-        db.execSQL(sql);
+        ContentValues values = new ContentValues();
+        values.put(imgPath, imgPath);
+        values.put(Tables.TableWine.name, name);
+        values.put(Tables.TableWine.description, description);
+        values.put(Tables.TableWine.years, years);
+        values.put(Tables.TableWine.color, idColor);
+        values.put(Tables.TableWine.idRegion, idRegion);
+        values.put(Tables.TableWine.quantity, quantity);
+        values.put(Tables.TableWine.price, price);
+        values.put(Tables.TableWine.idProvider, idProvider);
+        db.insert(Tables.TableWine.TABLE_WINE, null, values);
 
-        sql = "SELECT MAX("+ Tables.TableWine.key_id+") id FROM "+ Tables.TableWine.TABLE_WINE;
+
+
+        String sql = "SELECT MAX("+ Tables.TableWine.key_id+") id FROM "+ Tables.TableWine.TABLE_WINE;
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
         int idWine = c.getInt(c.getColumnIndex("id"));
@@ -493,26 +508,24 @@ public class dbHelper extends SQLiteOpenHelper {
                     "')";
             db.execSQL(sql);
         }
-
+        db.close();
     }
     public void updateWine(int _id,String imgpath,String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "UPDATE "+ Tables.TableWine.TABLE_WINE+" SET "+
-                Tables.TableWine.imgPath+"='"+imgpath+"',"+
-                Tables.TableWine.name+"='"+name+"',"+
-                Tables.TableWine.description+"='"+description+"',"+
-                Tables.TableWine.years+"="+years+","+
-                Tables.TableWine.color+"="+idColor+","+
-                Tables.TableWine.idRegion+"="+idRegion+","+
-                Tables.TableWine.quantity+"="+quantity+","+
-                Tables.TableWine.price+"="+price+","+
-                Tables.TableWine.idProvider+"="+idProvider+" "+
-                "WHERE "+
-                Tables.TableWine.key_id+"="+_id;
-        db.execSQL(sql);
-        Log.e("Deb",sql);
+        String strFilter = Tables.TableWine.key_id+"=" + _id;
+        ContentValues values = new ContentValues();
+        values.put(Tables.TableWine.imgPath, imgpath);
+        values.put(Tables.TableWine.name, name);
+        values.put(Tables.TableWine.description, description);
+        values.put(Tables.TableWine.years, years);
+        values.put(Tables.TableWine.color, idColor);
+        values.put(Tables.TableWine.idRegion, idRegion);
+        values.put(Tables.TableWine.quantity, quantity);
+        values.put(Tables.TableWine.price, price);
+        values.put(Tables.TableWine.idProvider, idProvider);
+        db.update(Tables.TableWine.TABLE_WINE, values, strFilter, null);
 
-        sql = "DELETE FROM "+ Tables.TableWineCepage.TABLE_NAME+" WHERE "+ Tables.TableWineCepage.idWine+"="+_id;
+        String sql = "DELETE FROM "+ Tables.TableWineCepage.TABLE_NAME+" WHERE "+ Tables.TableWineCepage.idWine+"="+_id;
         db.execSQL(sql);
 
         for(Cepage cep : cepages) {
@@ -536,7 +549,7 @@ public class dbHelper extends SQLiteOpenHelper {
         c.moveToFirst();
         Vin v = new Vin();
         v.set_id(c.getInt(c.getColumnIndex(Tables.TableWine.key_id)));
-        v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
+        v.setImg(c.getString(c.getColumnIndex(imgPath)));
         v.setName(c.getString(c.getColumnIndex(Tables.TableWine.name)));
         v.setAnnee(c.getInt(c.getColumnIndex(Tables.TableWine.years)));
         v.setDescription(c.getString(c.getColumnIndex(Tables.TableWine.description)));
@@ -568,7 +581,7 @@ public class dbHelper extends SQLiteOpenHelper {
         while (c.moveToNext()){
             Vin v = new Vin();
             v.set_id(c.getInt(c.getColumnIndex(Tables.TableWine.key_id)));
-            v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
+            v.setImg(c.getString(c.getColumnIndex(imgPath)));
             v.setName(c.getString(c.getColumnIndex(Tables.TableWine.name)));
             v.setAnnee(c.getInt(c.getColumnIndex(Tables.TableWine.years)));
             v.setDescription(c.getString(c.getColumnIndex(Tables.TableWine.description)));

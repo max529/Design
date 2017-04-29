@@ -62,8 +62,19 @@ public class AddOrderActivity extends AppCompatActivity {
 
         db.insertCommand(v.get_id(),qte,0);
 
-        Intent i = new Intent();
-        setResult(RESULT_OK,i);
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{v.getProvider().getEmail()});
+        i.putExtra(Intent.EXTRA_SUBJECT, "command of wine");
+        i.putExtra(Intent.EXTRA_TEXT   , "Hello "+v.getProvider().getName()+" "+v.getProvider().getSurname()+", I need "+qte+" bottles of "+v.getName());
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(AddOrderActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
+
+        Intent i2 = new Intent();
+        setResult(RESULT_OK,i2);
         finish();
     }
 }

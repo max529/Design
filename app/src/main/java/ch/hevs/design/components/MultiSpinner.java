@@ -36,6 +36,8 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner imp
         super(arg0, arg1, arg2);
     }
 
+
+
     @Override
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
         if (isChecked)
@@ -84,9 +86,14 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner imp
                     }
                 });
         builder.setOnCancelListener(this);
+
         builder.show();
         return true;
     }
+
+
+
+
 
     public void setItems(List<String> items, String allText,
                          MultiSpinnerListener listener) {

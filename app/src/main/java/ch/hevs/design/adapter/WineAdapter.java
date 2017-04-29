@@ -45,7 +45,7 @@ public class WineAdapter extends ArrayAdapter<Vin> {
         viewHolder.name.setText(vin.getName());
         viewHolder.annee.setText(vin.getAnnee()+"");
         String pathImg = vin.getImg();
-        if(pathImg== null || pathImg==""){
+        if(pathImg== null || pathImg.equals("")){
             viewHolder.avatar.setImageResource(R.drawable.wine_default);
         }else{
             Bitmap bMap = BitmapFactory.decodeFile(vin.getImg());

@@ -126,6 +126,16 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
             }
         });
 
+        final Spinner spinProv = (Spinner)findViewById(R.id.addFournisseurWine);
+        spinProv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Provider p = (Provider) spinProv.getSelectedItem();
+                Log.e("de",p.toString());
+                return false;
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

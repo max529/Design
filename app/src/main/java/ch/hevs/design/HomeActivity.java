@@ -31,12 +31,15 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // create the DB
         db = new dbHelper(HomeActivity.this);
 
+        //Ajout de couleur
         colors.add(new Couleur(getString(R.string.red)));
         colors.add(new Couleur(getString(R.string.white)));
         colors.add(new Couleur(getString(R.string.pink)));
 
+        // recupère les infos de la DB
         vins = db.getWines();
         commands = db.getCommands();
         mvts = db.getMovements();
@@ -44,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
             Log.e("debugImg",((Vin)w).toStringInfo());
         }
 
+        //creation de la nvaigation
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomNavBar = new BottomNavBar(bottomBar);
         bottomNavBar.setActivity(HomeActivity.this);
@@ -82,6 +86,11 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.navBtnOrderWine:
                 Intent intent1 = new Intent(this, AddOrderActivity.class);
                 this.startActivityForResult(intent1,2);
+                break;
+            case R.id.navBtnClearMvt:
+                db.clearMovements();
+                this.mvts = db.getMovements();
+                bottomNavBar.updateFragment(2);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

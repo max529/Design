@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Design</string>
+    <string name="app_name">WineCave</string>
     <string name="navVin">Wine</string>
     <string name="navCommande">Order</string>
     <string name="navMouvement">Movement</string>
@@ -10,16 +10,16 @@
     <string name="validate_wine">Validate Wine</string>
     <string name="year">Year</string>
     <string name="name">Name</string>
-    <string name="quantity">quantity</string>
+    <string name="quantity">Quantity</string>
     <string name="price">Price</string>
     <string name="add_cepage">Add Cepage</string>
     <string name="add_place">Add Place</string>
     <string name="validate_place">Validate Place</string>
     <string name="validate_cepage">Validate Cepage</string>
-    <string name="description">description</string>
+    <string name="description">Description</string>
     <string name="stock_restant_pce">Stock restant : %1$dpce</string>
     <string name="originaire_de">Originaire de %1$s</string>
-    <string name="compos_de">Composé de : %1$s</string>
+    <string name="compos_de">Composed of : %1$s</string>
     <string name="edit_wine">Edit wine</string>
     <string name="cepage_choice">Cepage Choice</string>
     <string name="provider_name">Provider Name</string>
@@ -43,4 +43,9 @@
     <string name="error_place_name">Please add a place name</string>
     <string name="error_cepage_name">Please add a ceapge name</string>
     <string name="error_quantity">Please add quantity</string>
+    <string name="command_received">Command received</string>
+    <string name="command_canceled">Command canceled</string>
+    <string name="get_out">Get out</string>
+    <string name="no_order">No order</string>
+    <string name="add_picutre">add picutre</string>
 </resources>

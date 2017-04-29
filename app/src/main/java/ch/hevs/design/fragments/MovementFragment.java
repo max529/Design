@@ -34,7 +34,7 @@ public class MovementFragment extends Fragment implements DefaultFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         // The last two arguments ensure LayoutParams are inflated
         // properly.
-        View rootView = inflater.inflate(
+        rootView = inflater.inflate(
                 R.layout.fragment_movement, container, false);
 
         mListView = (ListView) rootView.findViewById(R.id.listViewMovement);
@@ -53,6 +53,8 @@ public class MovementFragment extends Fragment implements DefaultFragment {
 
     @Override
     public void updateList() {
-
+        List<Mouvement> mvts = activity.mvts;
+        MovementAdapter adapter = new MovementAdapter(rootView.getContext(), mvts);
+        mListView.setAdapter(adapter);
     }
 }

@@ -35,6 +35,10 @@ public class BottomNavBar {
         return  activity;
     }
 
+    public CollectionPageAdapter getmDemoCollectionPagerAdapter(){
+        return mDemoCollectionPagerAdapter;
+    }
+
     public Menu getMenu() {
         return menu;
     }
@@ -91,6 +95,7 @@ public class BottomNavBar {
                 }else if(tabId == R.id.tab_mouvement){
                     if(menu!=null) {
                         menu.clear();
+                        activity.getMenuInflater().inflate(R.menu.movement, menu);
                     }
                     activity.setTitle(R.string.navMouvement);
                     mViewPager.setCurrentItem(2);
