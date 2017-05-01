@@ -44,9 +44,9 @@
     <string name="error_provider_name">Bitte fügen Sie ein Lieferantenname</string>
     <string name="error_provider_surname">Bitte fügen Sie ein Lieferantenvorname</string>
     <string name="error_quantity">Bitte fügen Sie einem Gehalt</string>
-    <string name="command_received">Command received</string>
+    <string name="command_received">Command received(GE)</string>
     <string name="command_canceled">Command canceled(DE)</string>
     <string name="get_out">Get out(DE)</string>
     <string name="no_order">No order</string>
-    <string name="add_picutre">add picutre</string>
+    <string name="add_picutre">add picture (GE)</string>
 </resources>

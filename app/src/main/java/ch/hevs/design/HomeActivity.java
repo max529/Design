@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         db = new dbHelper(HomeActivity.this);
 
         //Ajout de couleur
+        colors.clear();
         colors.add(new Couleur(getString(R.string.red)));
         colors.add(new Couleur(getString(R.string.white)));
         colors.add(new Couleur(getString(R.string.pink)));

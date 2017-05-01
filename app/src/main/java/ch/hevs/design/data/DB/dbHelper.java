@@ -477,10 +477,10 @@ public class dbHelper extends SQLiteOpenHelper {
 
     //-- Insert -- / -- Delete -- / -- Update -- / -- WINE --
 
-    public void insertWine(String imgPath,String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages ){
+    public void insertWine(String imgPaths,String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages ){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(imgPath, imgPath);
+        values.put(Tables.TableWine.imgPath, imgPaths);
         values.put(Tables.TableWine.name, name);
         values.put(Tables.TableWine.description, description);
         values.put(Tables.TableWine.years, years);
