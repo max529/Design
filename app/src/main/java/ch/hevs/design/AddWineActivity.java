@@ -356,8 +356,6 @@ public class AddWineActivity extends AppCompatActivity implements MultiSpinner.M
         spinnerRegion.setAdapter(adapterRegion);
     }
     private void updateListColor(){
-
-
         Spinner spinnerColor = (Spinner)findViewById(R.id.addColorWine);
         adapterColor = new ArrayAdapter<Couleur>(AddWineActivity.this,
                 android.R.layout.simple_spinner_item,colors);
