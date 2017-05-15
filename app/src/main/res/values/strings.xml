@@ -48,4 +48,6 @@
     <string name="get_out">Get out</string>
     <string name="no_order">No order</string>
     <string name="add_picutre">add picutre</string>
+    <string name="aProposdeNous">Cette application a été créé par Maxime Bétrisey et Hugo Rebelo dans le cadre du cours android de la HES-SO (EN)</string>
+    <string name="synchronize">synchronized</string>
 </resources>

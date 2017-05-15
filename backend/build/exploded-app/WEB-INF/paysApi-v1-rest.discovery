@@ -1,0 +1,239 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"RnkXbyw9us4_w3H-FU6An0C4oYs/ZL0KXKK6YF7N49rc0sfPVjQdeOw\"",
+ "discoveryVersion": "v1",
+ "id": "paysApi:v1",
+ "name": "paysApi",
+ "version": "v1",
+ "description": "This is an API",
+ "ownerDomain": "backend.design.hevs.ch",
+ "ownerName": "backend.design.hevs.ch",
+ "icons": {
+  "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+  "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+ },
+ "protocol": "rest",
+ "baseUrl": "https://myApplicationId.appspot.com/_ah/api/paysApi/v1/",
+ "basePath": "/_ah/api/paysApi/v1/",
+ "rootUrl": "https://myApplicationId.appspot.com/_ah/api/",
+ "servicePath": "paysApi/v1/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "CollectionResponse_Pays": {
+   "id": "CollectionResponse_Pays",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "Pays"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "Pays": {
+   "id": "Pays",
+   "type": "object",
+   "properties": {
+    "_id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "initial": {
+     "type": "string"
+    },
+    "nom": {
+     "type": "string"
+    }
+   }
+  }
+ },
+ "methods": {
+  "get": {
+   "id": "paysApi.get",
+   "path": "pays/{_id}",
+   "httpMethod": "GET",
+   "parameters": {
+    "_id": {
+     "type": "string",
+     "required": true,
+     "format": "int64",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "_id"
+   ],
+   "response": {
+    "$ref": "Pays"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "insert": {
+   "id": "paysApi.insert",
+   "path": "pays",
+   "httpMethod": "POST",
+   "request": {
+    "$ref": "Pays",
+    "parameterName": "resource"
+   },
+   "response": {
+    "$ref": "Pays"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "list": {
+   "id": "paysApi.list",
+   "path": "pays",
+   "httpMethod": "GET",
+   "parameters": {
+    "cursor": {
+     "type": "string",
+     "location": "query"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32",
+     "location": "query"
+    }
+   },
+   "response": {
+    "$ref": "CollectionResponse_Pays"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "patch": {
+   "id": "paysApi.patch",
+   "path": "pays/{_id}",
+   "httpMethod": "PATCH",
+   "parameters": {
+    "_id": {
+     "type": "string",
+     "required": true,
+     "format": "int64",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "_id"
+   ],
+   "request": {
+    "$ref": "Pays"
+   },
+   "response": {
+    "$ref": "Pays"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "remove": {
+   "id": "paysApi.remove",
+   "path": "pays/{_id}",
+   "httpMethod": "DELETE",
+   "parameters": {
+    "_id": {
+     "type": "string",
+     "required": true,
+     "format": "int64",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "_id"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "update": {
+   "id": "paysApi.update",
+   "path": "pays/{_id}",
+   "httpMethod": "PUT",
+   "parameters": {
+    "_id": {
+     "type": "string",
+     "required": true,
+     "format": "int64",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "_id"
+   ],
+   "request": {
+    "$ref": "Pays",
+    "parameterName": "resource"
+   },
+   "response": {
+    "$ref": "Pays"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  }
+ }
+}

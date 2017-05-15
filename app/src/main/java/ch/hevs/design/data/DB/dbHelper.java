@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.hevs.design.HomeActivity;
+import ch.hevs.design.LoadingActivity;
 import ch.hevs.design.components.SerializeList;
 import ch.hevs.design.data.Cepage;
 import ch.hevs.design.data.Command;
@@ -20,11 +21,27 @@ import ch.hevs.design.data.Pays;
 import ch.hevs.design.data.Provider;
 import ch.hevs.design.data.Region;
 import ch.hevs.design.data.Vin;
+import ch.hevs.design.data.converter.CepageConverter;
+import ch.hevs.design.data.converter.CommandConverter;
+import ch.hevs.design.data.converter.MouvementConverter;
+import ch.hevs.design.data.converter.PaysConverter;
+import ch.hevs.design.data.converter.ProviderConverter;
+import ch.hevs.design.data.converter.RegionConverter;
+import ch.hevs.design.data.converter.VinConverter;
+import ch.hevs.design.data.endPoint.CepageEndPoint;
+import ch.hevs.design.data.endPoint.CommandEndPoint;
+import ch.hevs.design.data.endPoint.MouvementEndPoint;
+import ch.hevs.design.data.endPoint.PaysEndPoint;
+import ch.hevs.design.data.endPoint.ProviderEndPoint;
+import ch.hevs.design.data.endPoint.RegionEndPoint;
+import ch.hevs.design.data.endPoint.VinEndPoint;
 
 import static ch.hevs.design.data.DB.Tables.TableCommand.qte;
 import static ch.hevs.design.data.DB.Tables.TableCountry.TABLE_COUNTRY;
 import static ch.hevs.design.data.DB.Tables.TableCountry.initial;
 import static ch.hevs.design.data.DB.Tables.TableCountry.nameCountry;
+import static ch.hevs.design.data.DB.Tables.TableProvider.address;
+import static ch.hevs.design.data.DB.Tables.TableProvider.email;
 import static ch.hevs.design.data.DB.Tables.TableRegion.idCountry;
 import static ch.hevs.design.data.DB.Tables.TableWine.idProvider;
 import static ch.hevs.design.data.DB.Tables.TableWine.imgPath;
@@ -74,6 +91,16 @@ public class dbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void SqlToCloud(LoadingActivity load) {
+        SqlToCloudProvider(load);
+        SqlToCloudCepages(load);
+        SqlToCloudCommand(load);
+        SqlToCloudCountry(load);
+        SqlToCloudMouvement(load);
+        SqlToCloudRegion(load);
+        SqlToCloudVin(load);
+    }
+
 
 
 
@@ -81,15 +108,16 @@ public class dbHelper extends SQLiteOpenHelper {
 
     //-- Insert -- / -- Delete -- / -- Update -- / -- PROVIDER --
 
-    public void insertProvider (String name, String surname, String address, String email){
+    public void insertProvider (String namee, String surnamee, String addresss, String emaill){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Tables.TableProvider.nameProvider, name);
-        values.put(Tables.TableProvider.surnameProvider, surname);
-        values.put(Tables.TableProvider.address, address);
-        values.put(Tables.TableProvider.email, email);
+        values.put(Tables.TableProvider.nameProvider, namee);
+        values.put(Tables.TableProvider.surnameProvider, surnamee);
+        values.put(Tables.TableProvider.address, addresss);
+        values.put(Tables.TableProvider.email, emaill);
         db.insert(Tables.TableProvider.TABLE_PROVIDER, null, values);
         db.close();
+        SqlToCloudProvider();
     }
     public Provider getProvider(int _id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -99,8 +127,8 @@ public class dbHelper extends SQLiteOpenHelper {
                 Tables.TableProvider.key_id,
                 Tables.TableProvider.nameProvider,
                 Tables.TableProvider.surnameProvider,
-                Tables.TableProvider.email,
-                Tables.TableProvider.address
+                email,
+                address
         };
         String selection = Tables.TableProvider.key_id+" = ?";
         String[] selectionArgs = {_id+""};
@@ -129,8 +157,8 @@ public class dbHelper extends SQLiteOpenHelper {
                 Tables.TableProvider.key_id,
                 Tables.TableProvider.nameProvider,
                 Tables.TableProvider.surnameProvider,
-                Tables.TableProvider.email,
-                Tables.TableProvider.address
+                email,
+                address
         };
         String selection = null;
         String[] selectionArgs = null;
@@ -155,6 +183,41 @@ public class dbHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public void SqlToCloudProvider(LoadingActivity load){
+        List<Provider> ps = getProviders();
+        for (Provider p: ps) {
+            ch.hevs.design.backend.providerApi.model.Provider pTemp = ProviderConverter.LocalToCloud(p);
+            new ProviderEndPoint(pTemp,load).execute();
+        }
+        Log.e("debugCloud","all data saved");
+    }
+    public void SqlToCloudProvider(){
+        List<Provider> ps = getProviders();
+        for (Provider p: ps) {
+            ch.hevs.design.backend.providerApi.model.Provider pTemp = ProviderConverter.LocalToCloud(p);
+            new ProviderEndPoint(pTemp).execute();
+        }
+        Log.e("debugCloud","all data saved");
+    }
+    public void CloudToSqlProvider(List<ch.hevs.design.backend.providerApi.model.Provider> items){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql="DELETE FROM "+Tables.TableProvider.TABLE_PROVIDER;
+        db.execSQL(sql);
+
+        for (ch.hevs.design.backend.providerApi.model.Provider p : items) {
+            Provider res = ProviderConverter.CloudToLocal(p);
+
+            ContentValues values = new ContentValues();
+            values.put(Tables.TableProvider.key_id, res.get_id());
+            values.put(Tables.TableProvider.nameProvider, res.getName());
+            values.put(Tables.TableProvider.surnameProvider, res.getSurname());
+            values.put(Tables.TableProvider.address, res.getAdress());
+            values.put(Tables.TableProvider.email, res.getEmail());
+            db.insert(Tables.TableProvider.TABLE_PROVIDER, null, values);
+        }
+        db.close();
+        Log.e("debugCloud","all data getted");
+    }
 
 
 
@@ -169,6 +232,7 @@ public class dbHelper extends SQLiteOpenHelper {
         values.put(Tables.TableCepage.nameCepage, name);
         db.insert(Tables.TableCepage.TABLE_CEPAGE, null, values);
         db.close();
+        SqlToCloudCepages();
     }
     public List<Cepage> getCepagesFromWine(int idWine){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -215,6 +279,36 @@ public class dbHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public void SqlToCloudCepages(LoadingActivity load){
+        List<Cepage> ps = getCepages();
+        for (Cepage c: ps) {
+            ch.hevs.design.backend.cepageApi.model.Cepage pTemp = CepageConverter.LocalToCloud(c);
+            new CepageEndPoint(pTemp,load).execute();
+        }
+    }
+    public void SqlToCloudCepages(){
+        List<Cepage> ps = getCepages();
+        for (Cepage c: ps) {
+            ch.hevs.design.backend.cepageApi.model.Cepage pTemp = CepageConverter.LocalToCloud(c);
+            new CepageEndPoint(pTemp).execute();
+        }
+    }
+    public void CloudToSqlCepages(List<ch.hevs.design.backend.cepageApi.model.Cepage> items){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql="DELETE FROM "+Tables.TableCepage.TABLE_CEPAGE;
+        db.execSQL(sql);
+
+        for (ch.hevs.design.backend.cepageApi.model.Cepage c : items) {
+            Cepage res = CepageConverter.CloudToLocal(c);
+
+            ContentValues values = new ContentValues();
+            values.put(Tables.TableCepage.key_id, res.get_id());
+            values.put(Tables.TableCepage.nameCepage, res.getNom());
+            db.insert(Tables.TableCepage.TABLE_CEPAGE, null, values);
+        }
+        db.close();
+    }
+
 
 
 
@@ -231,6 +325,7 @@ public class dbHelper extends SQLiteOpenHelper {
         values.put(Tables.TableCommand.state, state);
         db.insert(Tables.TableCommand.TABLE_COMMAND, null, values);
         db.close();
+        SqlToCloudCommand();
     }
     public List<Command> getCommands(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -265,6 +360,7 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "DELETE FROM "+ Tables.TableCommand.TABLE_COMMAND+" WHERE "+ Tables.TableCommand.key_id+"="+_id;
         db.execSQL(sql);
+        new CommandEndPoint(_id).execute();
     }
     public void receivedCommand(int _id){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -274,6 +370,8 @@ public class dbHelper extends SQLiteOpenHelper {
         sql = "UPDATE "+ Tables.TableWine.TABLE_WINE+" SET "+Tables.TableWine.quantity+"="+Tables.TableWine.quantity+"+"+c.getQte()+" WHERE "+ Tables.TableWine.key_id+"="+c.getVin().get_id();
         Log.e("debug",sql);
         db.execSQL(sql);
+        SqlToCloudCommand();
+        SqlToCloudVin();
     }
     public Command getCommand(int _id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -302,6 +400,38 @@ public class dbHelper extends SQLiteOpenHelper {
         return c;
     }
 
+    public void SqlToCloudCommand(LoadingActivity load){
+        List<Command> ps = getCommands();
+        for (Command c: ps) {
+            ch.hevs.design.backend.commandApi.model.Command pTemp = CommandConverter.LocalToCloud(c);
+            new CommandEndPoint(pTemp,load).execute();
+        }
+    }
+    public void SqlToCloudCommand(){
+        List<Command> ps = getCommands();
+        for (Command c: ps) {
+            ch.hevs.design.backend.commandApi.model.Command pTemp = CommandConverter.LocalToCloud(c);
+            new CommandEndPoint(pTemp).execute();
+        }
+    }
+    public void CloudToSqlCommand(List<ch.hevs.design.backend.commandApi.model.Command> items){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql="DELETE FROM "+Tables.TableCommand.TABLE_COMMAND;
+        db.execSQL(sql);
+
+        for (ch.hevs.design.backend.commandApi.model.Command c : items) {
+            Command res = CommandConverter.CloudToLocal(c);
+
+            ContentValues values = new ContentValues();
+            values.put(Tables.TableCommand.key_id, res.get_id());
+            values.put(Tables.TableCommand.qte, res.getQte());
+            values.put(Tables.TableCommand.idWine, res.getVin().get_id());
+            values.put(Tables.TableCommand.state, res.getState());
+            db.insert(Tables.TableCommand.TABLE_COMMAND, null, values);
+        }
+        db.close();
+    }
+
 
 
 
@@ -319,6 +449,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
 
         db.insert(Tables.TableCountry.CREATE_TABLE_COUNTRY,null, values);
+        SqlToCloudCountry();
     }
     public List<Pays> getCountries(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -347,6 +478,36 @@ public class dbHelper extends SQLiteOpenHelper {
         }
         return res;
     }
+    public void SqlToCloudCountry(LoadingActivity load){
+        List<Pays> ps = getCountries();
+        for (Pays c: ps) {
+            ch.hevs.design.backend.paysApi.model.Pays pTemp = PaysConverter.LocalToCloud(c);
+            new PaysEndPoint(pTemp,load).execute();
+        }
+    }
+    public void SqlToCloudCountry(){
+        List<Pays> ps = getCountries();
+        for (Pays c: ps) {
+            ch.hevs.design.backend.paysApi.model.Pays pTemp = PaysConverter.LocalToCloud(c);
+            new PaysEndPoint(pTemp).execute();
+        }
+    }
+    public void CloudToSqlCountry(List<ch.hevs.design.backend.paysApi.model.Pays> items){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql="DELETE FROM "+Tables.TableCountry.TABLE_COUNTRY;
+        db.execSQL(sql);
+
+        for (ch.hevs.design.backend.paysApi.model.Pays c : items) {
+            Pays res = PaysConverter.CloudToLocal(c);
+
+            ContentValues values = new ContentValues();
+            values.put(Tables.TableCountry.key_id, res.get_id());
+            values.put(Tables.TableCountry.initial, res.getInitial());
+            values.put(Tables.TableCountry.nameCountry, res.getNom());
+            db.insert(Tables.TableCountry.TABLE_COUNTRY, null, values);
+        }
+        db.close();
+    }
 
 
 
@@ -364,6 +525,7 @@ public class dbHelper extends SQLiteOpenHelper {
         values.put(Tables.TableMovemement.quantity, qte);
         db.insert(Tables.TableMovemement.TABLE_MOVEMENT, null, values);
         db.close();
+        SqlToCloudMouvement();
     }
     public List<Mouvement> getMovements(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -398,9 +560,45 @@ public class dbHelper extends SQLiteOpenHelper {
         return res;
     }
     public void clearMovements(){
+        List<Mouvement> mvts = getMovements();
+        for (Mouvement m: mvts) {
+            new MouvementEndPoint(m.get_id()).execute();
+        }
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "DELETE FROM "+ Tables.TableMovemement.TABLE_MOVEMENT;
         db.execSQL(sql);
+
+    }
+    public void SqlToCloudMouvement(LoadingActivity load){
+        List<Mouvement> ps = getMovements();
+        for (Mouvement c: ps) {
+            ch.hevs.design.backend.mouvementApi.model.Mouvement pTemp = MouvementConverter.LocalToCloud(c);
+            new MouvementEndPoint(pTemp,load).execute();
+        }
+    }
+    public void SqlToCloudMouvement(){
+        List<Mouvement> ps = getMovements();
+        for (Mouvement c: ps) {
+            ch.hevs.design.backend.mouvementApi.model.Mouvement pTemp = MouvementConverter.LocalToCloud(c);
+            new MouvementEndPoint(pTemp).execute();
+        }
+    }
+    public void CloudToSqlMouvement(List<ch.hevs.design.backend.mouvementApi.model.Mouvement> items){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql="DELETE FROM "+Tables.TableMovemement.TABLE_MOVEMENT;
+        db.execSQL(sql);
+
+        for (ch.hevs.design.backend.mouvementApi.model.Mouvement c : items) {
+            Mouvement res = MouvementConverter.CloudToLocal(c);
+
+            ContentValues values = new ContentValues();
+            values.put(Tables.TableMovemement.key_id, res.get_id());
+            values.put(Tables.TableMovemement.key_in, res.isIn());
+            values.put(Tables.TableMovemement.key_vin, res.getVin().get_id());
+            values.put(Tables.TableMovemement.quantity, res.getQte());
+            db.insert(Tables.TableMovemement.TABLE_MOVEMENT, null, values);
+        }
+        db.close();
     }
 
 
@@ -418,6 +616,7 @@ public class dbHelper extends SQLiteOpenHelper {
         values.put(Tables.TableRegion.idCountry, idCountry);
         db.insert(Tables.TableRegion.TABLE_REGION, null, values);
         db.close();
+        SqlToCloudRegion();
     }
     public Region getRegion(int _id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -425,8 +624,8 @@ public class dbHelper extends SQLiteOpenHelper {
         String country = Tables.TableCountry.TABLE_COUNTRY;
 
         String MY_QUERY = "SELECT * FROM "+table+" a INNER JOIN "+country+" b ON a."+ idCountry+"=b."+ Tables.TableCountry.key_id+
-                            " WHERE "+ Tables.TableRegion.key_id+" = "+_id+
-                            " ORDER BY "+ Tables.TableRegion.region;
+                " WHERE "+ Tables.TableRegion.key_id+" = "+_id+
+                " ORDER BY "+ Tables.TableRegion.region;
 
         Cursor c = db.rawQuery(MY_QUERY, null);
         c.moveToFirst();
@@ -469,6 +668,36 @@ public class dbHelper extends SQLiteOpenHelper {
         }
         return res;
     }
+    public void SqlToCloudRegion(LoadingActivity load){
+        List<Region> ps = getRegions();
+        for (Region c: ps) {
+            ch.hevs.design.backend.regionApi.model.Region pTemp = RegionConverter.LocalToCloud(c);
+            new RegionEndPoint(pTemp,load).execute();
+        }
+    }
+    public void SqlToCloudRegion(){
+        List<Region> ps = getRegions();
+        for (Region c: ps) {
+            ch.hevs.design.backend.regionApi.model.Region pTemp = RegionConverter.LocalToCloud(c);
+            new RegionEndPoint(pTemp).execute();
+        }
+    }
+    public void CloudToSqlRegion(List<ch.hevs.design.backend.regionApi.model.Region> items){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql="DELETE FROM "+Tables.TableRegion.TABLE_REGION;
+        db.execSQL(sql);
+
+        for (ch.hevs.design.backend.regionApi.model.Region c : items) {
+            Region res = RegionConverter.CloudToLocal(c);
+
+            ContentValues values = new ContentValues();
+            values.put(Tables.TableRegion.key_id, res.get_id());
+            values.put(Tables.TableRegion.idCountry, res.getPays().get_id());
+            values.put(Tables.TableRegion.region, res.getNom());
+            db.insert(Tables.TableRegion.TABLE_REGION, null, values);
+        }
+        db.close();
+    }
 
 
 
@@ -509,6 +738,7 @@ public class dbHelper extends SQLiteOpenHelper {
             db.execSQL(sql);
         }
         db.close();
+        SqlToCloudVin();
     }
     public void updateWine(int _id,String imgpath,String name, String description,int years, int idColor, int idRegion, double price, int quantity, int idProvider, List<Cepage> cepages){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -538,6 +768,7 @@ public class dbHelper extends SQLiteOpenHelper {
                     "')";
             db.execSQL(sql);
         }
+        SqlToCloudVin();
     }
     public Vin getWine(int _id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -613,7 +844,7 @@ public class dbHelper extends SQLiteOpenHelper {
         while (c.moveToNext()){
             Vin v = new Vin();
             v.set_id(c.getInt(c.getColumnIndex(Tables.TableWine.key_id)));
-            //v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
+            v.setImg(c.getString(c.getColumnIndex(Tables.TableWine.imgPath)));
             v.setName(c.getString(c.getColumnIndex(Tables.TableWine.name)));
             v.setAnnee(c.getInt(c.getColumnIndex(Tables.TableWine.years)));
             v.setDescription(c.getString(c.getColumnIndex(Tables.TableWine.description)));
@@ -638,6 +869,62 @@ public class dbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "UPDATE "+ Tables.TableWine.TABLE_WINE+" SET "+Tables.TableWine.quantity+"="+Tables.TableWine.quantity+"-"+qte+" WHERE "+ Tables.TableWine.key_id+"="+idWine;
         db.execSQL(sql);
+        SqlToCloudVin();
+    }
+
+    public void SqlToCloudVin(LoadingActivity load){
+        List<Vin> ps = getAllWines();
+        for (Vin c: ps) {
+            ch.hevs.design.backend.vinApi.model.Vin pTemp = VinConverter.LocalToCloud(c);
+            new VinEndPoint(pTemp,load).execute();
+        }
+    }
+    public void SqlToCloudVin(){
+        List<Vin> ps = getAllWines();
+        for (Vin c: ps) {
+            ch.hevs.design.backend.vinApi.model.Vin pTemp = VinConverter.LocalToCloud(c);
+            new VinEndPoint(pTemp).execute();
+        }
+    }
+    public void CloudToSqlVin(List<ch.hevs.design.backend.vinApi.model.Vin> items){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql="DELETE FROM "+Tables.TableWine.TABLE_WINE;
+        db.execSQL(sql);
+
+        for (ch.hevs.design.backend.vinApi.model.Vin c : items) {
+            Vin res = VinConverter.CloudToLocal(c);
+
+            ContentValues values = new ContentValues();
+            values.put(Tables.TableWine.key_id, res.get_id());
+            values.put(Tables.TableWine.idProvider, res.getProvider().get_id());
+            values.put(Tables.TableWine.imgPath, res.getImg());
+            values.put(Tables.TableWine.color, res.getCouleur().get_id());
+            values.put(Tables.TableWine.description, res.getDescription());
+            values.put(Tables.TableWine.idRegion, res.getRegion().get_id());
+            values.put(Tables.TableWine.name, res.getName());
+            values.put(Tables.TableWine.price, res.getPrix());
+            values.put(Tables.TableWine.quantity, res.getQte());
+            values.put(Tables.TableWine.years, res.getAnnee());
+            db.insert(Tables.TableWine.TABLE_WINE, null, values);
+
+            sql = "DELETE FROM "+ Tables.TableWineCepage.TABLE_NAME+" WHERE "+ Tables.TableWineCepage.idWine+"="+res.get_id();
+            db.execSQL(sql);
+
+            for(ch.hevs.design.backend.vinApi.model.Cepage cep : c.getCepage()) {
+                Cepage cepageLocal = CepageConverter.CloudToLocal(cep);
+
+                sql = "INSERT INTO " + Tables.TableWineCepage.TABLE_NAME + " (" +
+                        Tables.TableWineCepage.idWine + "," +
+                        Tables.TableWineCepage.idCepage +
+                        ") VALUES ('" +
+                        res.get_id() + "','" +
+                        cepageLocal.get_id() +
+                        "')";
+                db.execSQL(sql);
+            }
+
+        }
+        db.close();
     }
 
 

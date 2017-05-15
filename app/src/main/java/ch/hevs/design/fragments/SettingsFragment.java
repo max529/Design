@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 import ch.hevs.design.HomeActivity;
+import ch.hevs.design.LoadingActivity;
 import ch.hevs.design.R;
 import ch.hevs.design.data.Langue;
 import ch.hevs.design.interfaces.DefaultFragment;
@@ -78,6 +80,15 @@ public class SettingsFragment extends Fragment implements DefaultFragment {
 
         });
 
+
+        Button synchro = (Button)rootView.findViewById(R.id.btnSync);
+        synchro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Syncro();
+            }
+        });
+
         return rootView;
     }
 
@@ -97,5 +108,16 @@ public class SettingsFragment extends Fragment implements DefaultFragment {
     @Override
     public void updateList() {
 
+    }
+
+    public void Syncro(){
+        /*List<Vin> vins = db.getAllWines();
+        for (Vin v: vins) {
+            new VinEndPoint(v).execute();
+        }*/
+        //<Cepage> cepages = db.getCepages();
+        Intent i = new Intent(activity,LoadingActivity.class);
+        i.putExtra("save","save");
+        activity.startActivityForResult(i,666);
     }
 }

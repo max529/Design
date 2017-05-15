@@ -30,6 +30,8 @@ public class Couleur implements Serializable{
         this.couleur = couleur;
     }
 
+    public Couleur(){ }
+
     @Override
     public String toString() {
         return this.couleur;

@@ -19,6 +19,7 @@ import ch.hevs.design.data.DB.dbHelper;
 import ch.hevs.design.data.Mouvement;
 import ch.hevs.design.data.Vin;
 
+
 public class HomeActivity extends AppCompatActivity {
     public static dbHelper db = null;
     public static List<Couleur> colors = new ArrayList<Couleur>();
@@ -26,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     public SerializeList<Vin> vins = new SerializeList<Vin>();
     public List<Command> commands = new ArrayList<Command>();
     public List<Mouvement> mvts = new ArrayList<Mouvement>();
+    public static int syncro = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,17 @@ public class HomeActivity extends AppCompatActivity {
         // create the DB
         db = new dbHelper(HomeActivity.this);
 
+
+        if(syncro == 0){
+            Intent i = new Intent(this,LoadingActivity.class);
+            this.startActivityForResult(i,666);
+        }else{
+            createAll();
+        }
+
+
+    }
+    public void createAll(){
         //Ajout de couleur
         colors.clear();
         colors.add(new Couleur(getString(R.string.red)));
@@ -44,9 +57,6 @@ public class HomeActivity extends AppCompatActivity {
         vins = db.getWines();
         commands = db.getCommands();
         mvts = db.getMovements();
-        for(Object w : vins){
-            Log.e("debugImg",((Vin)w).toStringInfo());
-        }
 
         //creation de la nvaigation
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
@@ -109,6 +119,9 @@ public class HomeActivity extends AppCompatActivity {
             }else if(requestCode==2){
                 commands = db.getCommands();
                 bottomNavBar.updateFragment(1);
+            }else if(requestCode==666){
+                createAll();
+                syncro = 1;
             }
         }
     }
