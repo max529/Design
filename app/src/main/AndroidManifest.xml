@@ -38,5 +38,6 @@
             android:parentActivityName=".HomeActivity" />
         <activity android:name=".LoadingActivity"></activity>
     </application>
-
+    <!-- this is a test for creation in new branch-->
 </manifest>
+
