@@ -23,4 +23,7 @@ public class ExampleInstrumentedTest {
 
         assertEquals("ch.hevs.design", appContext.getPackageName());
     }
+
+    /**
+     * This is a commit for test in Redmine**/
 }
