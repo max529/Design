@@ -17,6 +17,13 @@ import static ch.hevs.design.HomeActivity.db;
 
 public class AddOrderActivity extends AppCompatActivity {
 
+    /**
+     * first comment
+     */
+   
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
