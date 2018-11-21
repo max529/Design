@@ -15,6 +15,9 @@ import static ch.hevs.design.HomeActivity.db;
 
 public class AddCepageActivity extends AppCompatActivity {
 
+    /**
+     * this is a comment to test project redmine*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
